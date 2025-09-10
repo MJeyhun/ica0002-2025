@@ -3,3 +3,8 @@
     hosts: all
     roles:
       - init
+  
+  - name: Web Servers      
+    hosts: web_servers
+    roles:
+      - nginx
