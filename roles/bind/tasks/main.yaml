@@ -1,0 +1,23 @@
+- name: Install bind9
+  apt:
+    name: bind9
+    state: present
+
+- name: Enable bind9
+  service:
+    name: bind9
+    state: started
+    enabled: true
+
+- template:
+    dest: /etc/bind/named.conf.{{ item }}
+    src: bind.{{ item }}.j2
+  loop:
+    - options
+    - local
+  notify: restart bind
+
+- template:
+    dest: /var/cache/bind/db.batice.ttu
+    src: db.batice.ttu.j2
+

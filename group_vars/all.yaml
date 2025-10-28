@@ -1,4 +1,4 @@
-mysql_host: 192.168.43.27
+mysql_host: "{{ hostvars[groups['db_servers'][0]]['ansible_default_ipv4']['address'] }}"
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -8,3 +8,7 @@ mysql_password: !vault |
           37386231666234393636333965633166626236663164383034346232343864303764396466316263
           3963336565613763610a616462613033656666653233363538643937613532353630346231343731
           3935
+
+
+
+mydomain: batice.ttu

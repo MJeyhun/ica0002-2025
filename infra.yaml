@@ -3,8 +3,18 @@
     hosts: all
     roles:
       - init
-  
-  - name: Web Servers      
+
+  - name: DNS Servers
+    hosts: dns_servers
+    roles:
+      - bind
+
+  - name: Resolve
+    hosts: all
+    roles:
+      - resolver
+
+  - name: Web Servers
     hosts: web_servers
     roles:
       - agama

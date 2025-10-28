@@ -1,0 +1,17 @@
+- name: Check if /etc/resolver.conf exists
+  stat:
+    path: /etc/resolv.conf
+  register: resolv_conf_stat
+
+- name: Unlink /etc/resolv.conf if it exists and is a symlink
+  file:
+    path: /etc/resolv.conf
+    state: absent
+  when: resolv_conf_stat.stat.exists and resolv_conf_stat.stat.islnk
+
+
+- name: 
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+
