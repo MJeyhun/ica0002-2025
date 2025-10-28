@@ -5,10 +5,13 @@
       - uwsgi-plugin-python3
     state: present
 
-- name: Copy "agama.ini" file
-  copy:
-    src: agama.ini
+- name: Template "agama.ini.j2" file
+  template:
+    src: agama.ini.j2
     dest: /etc/uwsgi/apps-enabled/agama.ini
+    owner: agama
+    mode: 0400
+  no_log: true
   notify:
     - Restart uWSGI
 
