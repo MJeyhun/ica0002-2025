@@ -1,0 +1,2 @@
+1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100
+avg(rate(node_cpu_seconds_total{mode!="idle"}[5m])) by (instance)

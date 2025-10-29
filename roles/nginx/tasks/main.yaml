@@ -1,11 +1,11 @@
 - name: install nginx
-  ansible.builtin.apt:
+  apt:
     name: nginx
     state: present
 
-- name: Copy "default" file
-  copy: 
-    src: default
+- name: Apply Nginx configuration using template
+  template: 
+    src: default.j2
     dest: /etc/nginx/sites-enabled/default
   notify:
     - Restart Nginx

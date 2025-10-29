@@ -1,5 +1,5 @@
-MJeyhun-1 ansible_host=193.40.157.25 ansible_port=33322 ansible_user=ubuntu
-MJeyhun-2 ansible_host=193.40.157.25 ansible_port=28322 ansible_user=ubuntu
+MJeyhun-1 ansible_host=193.40.157.25 ansible_port=14222 ansible_user=ubuntu
+MJeyhun-2 ansible_host=193.40.157.25 ansible_port=24522 ansible_user=ubuntu
 
 [web_servers]
 MJeyhun-1
@@ -8,4 +8,7 @@ MJeyhun-1
 MJeyhun-2
 
 [dns_servers]
+MJeyhun-2
+
+[prometheus_servers]
 MJeyhun-2

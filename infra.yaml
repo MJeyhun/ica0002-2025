@@ -3,6 +3,7 @@
     hosts: all
     roles:
       - init
+    tags: i
 
   - name: DNS Servers
     hosts: dns_servers
@@ -25,3 +26,10 @@
     hosts: db_servers
     roles:
       - mysql
+
+  - name: Prometheus Server
+    hosts: prometheus_servers
+    roles:
+      - prometheus
+      - nginx
+    tags: p

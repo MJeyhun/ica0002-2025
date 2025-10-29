@@ -1,0 +1,18 @@
+- name: install prometheus
+  ansible.builtin.apt:
+    name: prometheus
+    state: present
+
+- name: Ensure Prometheus service is enabled and started
+  service:
+    name: prometheus
+    state: started
+    enabled: true
+
+- name: Apply Prometheus default configuration from template
+  template:
+    src: prometheus.j2
+    dest: /etc/default/prometheus
+  notify: Restart Prometheus.j2
+
+
