@@ -10,6 +10,9 @@
   notify:
     - Restart Nginx
 
+- name: Flush handlers
+  meta: flush_handlers
+
 - name: Nginx service
   ansible.builtin.service:
     name: nginx

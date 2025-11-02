@@ -44,7 +44,7 @@
     group: prometheus
     mode: '0600'
   no_log: true
-
+  notify: Restart mysqld-exporter
 
 - name: MySQL exporter
   apt:

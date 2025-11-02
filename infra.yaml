@@ -9,11 +9,15 @@
     hosts: dns_servers
     roles:
       - bind
+    tags: dns
+
 
   - name: Resolve
     hosts: all
     roles:
       - resolver
+    tags: r
+
 
   - name: Web Servers
     hosts: web_servers
@@ -21,11 +25,13 @@
       - agama
       - uwsgi
       - nginx
+    tags: w
 
   - name: Database server
     hosts: db_servers
     roles:
       - mysql
+    tags: db
 
   - name: Prometheus Server
     hosts: prometheus_servers

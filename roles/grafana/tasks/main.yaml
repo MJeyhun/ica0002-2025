@@ -1,0 +1,58 @@
+- name: Add Grafana GPG key
+  apt_key:
+    url: https://apt.grafana.com/gpg.key
+    state: present
+    keyring: /etc/apt/keyrings/grafana.gpg
+
+- name: Add grafana repo
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main"
+    state: present
+    filename: grafana
+
+- name: Update APT cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install Grafana OSS
+  apt:
+    name: grafana
+    state: present
+
+
+- name: Provision Prometheus as default datasource
+  template:
+    src: datasources.yaml.j2
+    dest: /etc/grafana/provisioning/datasources/datasources.yaml
+  notify: Restart Grafana
+
+- name: Ensure destination directory exists
+  file:
+    path: /var/lib/grafana/dashboards
+    state: directory
+
+- name: Upload main.json to the server
+  copy:
+    src: main.json
+    dest: /var/lib/grafana/dashboards/main.json
+  notify: Restart Grafana
+
+- name: Provision  Grafana dashboards
+  template:
+    src: dashboards.yaml.j2
+    dest: /etc/grafana/provisioning/dashboards/dashboards.yaml
+  notify: Restart Grafana
+
+- name: Start and enable Grafana server
+  service:
+    name: grafana-server
+    state: started
+    enabled: true
+
+- name: Apply Grafana configuration from template
+  template:
+    src: grafana.ini.j2
+    dest: /etc/grafana/grafana.ini
+  notify: Restart Grafana
+

@@ -1,0 +1,11 @@
+apiVersion: 1
+datasources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    orgId: 1
+    url: http://{{ groups['prometheus_servers'][0] }}:9090/prometheus
+    uid: be9wall15qn0gf
+    isDefault: true
+    version: 1
+    editable: false
