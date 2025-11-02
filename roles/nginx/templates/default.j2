@@ -1,5 +1,5 @@
 server {
-    listen 80;
+    listen 80 default_server;
     server_name _;
         {% if inventory_hostname in groups['web_servers'] %}
         location / {
@@ -13,4 +13,11 @@ server {
             proxy_pass http://{{ inventory_hostname }}:9090;
         }
         {% endif %}
+}
+
+server {
+	listen 8080 default_server;
+	location /stub_status {
+		stub_status;
+	}
 }

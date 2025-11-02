@@ -34,3 +34,43 @@
     host: "%"
     priv: "{{ mysql_database }}.*:ALL"
     login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
+
+- name: Cnf files for exporter
+  template:
+    dest: /var/lib/prometheus/.my.cnf
+    src: my.cnf.j2
+    owner: prometheus
+    group: prometheus
+    mode: '0600'
+  no_log: true
+
+
+- name: MySQL exporter
+  apt:
+    name: prometheus-mysqld-exporter
+    state: present
+
+- name: Create MySQL user for the exporter
+  community.mysql.mysql_user:
+    name: "{{ mysql_exporter_username }}"
+    password: "{{ mysql_exporter_password }}"
+    priv: "*.*:PROCESS,REPLICATION CLIENT"
+    host: "%"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Configure mysqld_exporter systemd service to use .my.cnf
+  ansible.builtin.lineinfile:
+    path: /etc/default/prometheus-mysqld-exporter
+    regexp: '^ARGS='
+    line: 'ARGS="--config.my-cnf=/var/lib/prometheus/.my.cnf"'
+  notify: Restart mysqld-exporter
+
+- name: Ensure Prometheus MySQL Exporter is started and enabled
+  systemd:
+    name: prometheus-mysqld-exporter
+    state: started
+    enabled: true
+
+ 
+

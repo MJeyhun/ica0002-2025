@@ -21,3 +21,15 @@
     dest: /var/cache/bind/db.batice.ttu
     src: db.batice.ttu.j2
 
+
+- name: Install Bind9 exporter
+  apt:
+    name: prometheus-bind-exporter
+    state: present
+
+- name: Ensure Bind exporter is running and enabled
+  systemd:
+    name: prometheus-bind-exporter
+    state: started
+    enabled: true
+

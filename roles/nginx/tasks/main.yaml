@@ -14,4 +14,15 @@
   ansible.builtin.service:
     name: nginx
     state: started
+    enabled: true
+
+- name: Install Nginx exporter
+  apt:
+    name: prometheus-nginx-exporter
+    state: present
+
+- name: Ensure nginx exporter started
+  service:
+    name: prometheus-nginx-exporter
+    state: started
     enabled: true 
