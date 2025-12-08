@@ -43,19 +43,11 @@
     owner: prometheus
     mode: '0600'
   no_log: true
-  notify: Restart mysqld-exporter
 
 - name: MySQL exporter
   apt:
     name: prometheus-mysqld-exporter
     state: present
-
-- name: Configure mysqld_exporter systemd service to use .my.cnf
-  ansible.builtin.lineinfile:
-    path: /etc/default/prometheus-mysqld-exporter
-    regexp: '^ARGS='
-    line: 'ARGS="--config.my-cnf=/var/lib/prometheus/.my.cnf"'
-  notify: Restart mysqld-exporter
 
 - name: Create MySQL user for the exporter
   community.mysql.mysql_user:
@@ -64,6 +56,14 @@
     priv: "*.*:PROCESS,REPLICATION CLIENT"
     host: "%"
     login_unix_socket: /var/run/mysqld/mysqld.sock
+    column_case_sensitive: false
+
+- name: Configure mysqld_exporter systemd service to use .my.cnf
+  ansible.builtin.lineinfile:
+    path: /etc/default/prometheus-mysqld-exporter
+    regexp: '^ARGS='
+    line: 'ARGS="--config.my-cnf=/var/lib/prometheus/.my.cnf"'
+  notify: Restart mysqld-exporter
 
 - name: Ensure Prometheus MySQL Exporter is started and enabled
   systemd:
@@ -71,5 +71,4 @@
     state: started
     enabled: true
 
- 
 

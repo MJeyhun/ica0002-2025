@@ -10,7 +10,7 @@
   when: resolv_conf_stat.stat.exists and resolv_conf_stat.stat.islnk
 
 
-- name: 
+- name: Apply /etc/resolv.conf template
   template:
     src: resolv.conf.j2
     dest: /etc/resolv.conf
