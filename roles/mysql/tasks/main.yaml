@@ -36,6 +36,25 @@
     login_unix_socket: /var/run/mysqld/mysqld.sock
   no_log: true
 
+
+- name: Disable service autostart during package installation
+  copy:
+    dest: /usr/sbin/policy-rc.d
+    mode: '0755'
+    content: |
+      #!/bin/sh
+      exit 101
+
+- name: Install MySQL exporter
+  apt:
+    name: prometheus-mysqld-exporter
+    state: present
+
+- name: Remove autostart block policy after install
+  file:
+    path: /usr/sbin/policy-rc.d
+    state: absent
+
 - name: Cnf files for exporter
   template:
     dest: /var/lib/prometheus/.my.cnf
@@ -43,11 +62,6 @@
     owner: prometheus
     mode: '0600'
   no_log: true
-
-- name: MySQL exporter
-  apt:
-    name: prometheus-mysqld-exporter
-    state: present
 
 - name: Create MySQL user for the exporter
   community.mysql.mysql_user:
@@ -57,13 +71,14 @@
     host: "%"
     login_unix_socket: /var/run/mysqld/mysqld.sock
     column_case_sensitive: false
+  no_log: true
+  notify: Restart MySQL
 
 - name: Configure mysqld_exporter systemd service to use .my.cnf
   ansible.builtin.lineinfile:
     path: /etc/default/prometheus-mysqld-exporter
     regexp: '^ARGS='
     line: 'ARGS="--config.my-cnf=/var/lib/prometheus/.my.cnf"'
-  notify: Restart mysqld-exporter
 
 - name: Ensure Prometheus MySQL Exporter is started and enabled
   systemd:
