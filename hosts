@@ -1,5 +1,5 @@
-MJeyhun-1 ansible_host=193.40.157.25 ansible_port=44222 ansible_user=ubuntu
-MJeyhun-2 ansible_host=193.40.157.25 ansible_port=39222 ansible_user=ubuntu
+MJeyhun-1 ansible_host=193.40.157.25 ansible_port=16622 ansible_user=ubuntu
+MJeyhun-2 ansible_host=193.40.157.25 ansible_port=7622 ansible_user=ubuntu
 
 [web_servers]
 MJeyhun-1
@@ -15,3 +15,10 @@ MJeyhun-2
 
 [grafana_servers]
 MJeyhun-1
+
+[loki_servers]
+MJeyhun-1
+
+[promtail_servers]
+MJeyhun-1
+MJeyhun-2

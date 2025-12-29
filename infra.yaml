@@ -46,3 +46,15 @@
     roles:
       - grafana
     tags: g
+
+  - name: Loki server
+    hosts: loki_servers
+    roles:
+      - loki
+    tags: l
+
+  - name: Promtail server
+    hosts: promtail_servers
+    roles:
+      - promtail
+    tags: pt

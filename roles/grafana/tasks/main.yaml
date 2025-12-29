@@ -1,15 +1,3 @@
-- name: Add Grafana GPG key
-  apt_key:
-    url: https://apt.grafana.com/gpg.key
-    state: present
-    keyring: /etc/apt/keyrings/grafana.gpg
-
-- name: Add grafana repo
-  apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main"
-    state: present
-    filename: grafana
-
 - name: Update APT cache
   apt:
     update_cache: yes

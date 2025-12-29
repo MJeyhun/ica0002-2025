@@ -1,17 +1,27 @@
-- name: Add Grafana APT key
-  apt_key:
-    url: https://packages.grafana.com/gpg.key
-    state: present
-
-- name: Add Grafana APT repository
-  apt_repository:
-    repo: "deb https://packages.grafana.com/oss/deb stable main"
-    state: present
-
 - name: Install Loki
   apt:
     name: loki
     state: present
     update_cache: yes
 
- 
+
+- name: Create Loki data directory
+  file:
+    path: /var/lib/loki
+    state: directory
+    owner: loki
+    mode: "0755"
+
+- name: Configure Loki
+  template:
+    src: config.yml.j2
+    dest: /etc/loki/config.yml
+    owner: loki
+    mode: "0644"
+  notify: Restart Loki
+
+- name: Enable and start Loki
+  systemd:
+    name: loki
+    enabled: true
+    state: started 

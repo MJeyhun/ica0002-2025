@@ -1,0 +1,44 @@
+- name: Install Promtail
+  apt:
+    name: promtail
+    state: present
+    update_cache: yes
+
+- name: Add promtail user to adm group
+  user:
+    name: promtail
+    groups: adm
+    append: yes
+
+- name: Check if agama log exists
+  stat:
+    path: /var/log/uwsgi/app/agama.log
+  register: agama_log_stat
+
+- name: Allow adm group to read agama log
+  file:
+    path: /var/log/uwsgi/app/agama.log
+    group: adm
+    mode: "0640"
+  when: agama_log_stat.stat.exists
+
+- name: Create Promtail positions directory
+  file:
+    path: /var/lib/promtail
+    state: directory
+    owner: promtail
+    mode: "0755"
+
+- name: Configure Promtail
+  template:
+    src: config.yml.j2
+    dest: /etc/promtail/config.yml
+    owner: promtail
+    mode: "0644"
+  notify: restart promtail
+
+- name: Enable and start Promtail
+  systemd:
+    name: promtail
+    enabled: true
+    state: started
