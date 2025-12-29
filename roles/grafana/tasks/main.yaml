@@ -9,7 +9,7 @@
     state: present
 
 
-- name: Provision Prometheus as default datasource
+- name: Provision Prometheus and Loki as default datasource
   template:
     src: datasources.yaml.j2
     dest: /etc/grafana/provisioning/datasources/datasources.yaml
