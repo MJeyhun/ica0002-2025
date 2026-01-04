@@ -25,8 +25,8 @@ Availability
 Availability = successful_requests / total_requests
 ```
 ### SLO 
-- **Target:** 99% availability
-- **Measurement Window:** 30 days
+- **Target:** 90% availability
+- **Measurement Window:** 7 days
 
 
 
@@ -53,4 +53,4 @@ Latency SLI = requests_with_latency <= 0.5s / total_requests
 ```
 ### SLO
 - **Target:** 95% of requests complete within 500 ms
-- **Measurement Window:** 30 days
+- **Measurement Window:** 7 days
