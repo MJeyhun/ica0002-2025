@@ -1,3 +1,5 @@
+log_format agama_format '$status $request_time';
+
 server {
     listen 80 default_server;
     server_name _;
@@ -5,6 +7,8 @@ server {
         location / {
                 uwsgi_pass localhost:5000;
                 include uwsgi_params;
+		access_log /var/log/nginx/access.log;
+		access_log /var/log/nginx/agama.log status_time;
         }
         {% endif %}
 
