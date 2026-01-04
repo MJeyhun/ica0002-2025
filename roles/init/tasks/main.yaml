@@ -51,3 +51,20 @@
     repo: "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main"
     state: present
     filename: grafana
+
+- name: Ensure the "backup" user exists and SSH key pair is generated
+  ansible.builtin.user:
+    name: backup
+    home: /home/backup
+    state: present
+    create_home: yes
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+
+- name: Add backup server SSH key to known_hosts for user backup
+  ansible.builtin.template:
+    src: "known_hosts.j2"
+    dest: "/home/backup/.ssh/known_hosts"
+    owner: backup
+    group: backup
+    mode: '0644'

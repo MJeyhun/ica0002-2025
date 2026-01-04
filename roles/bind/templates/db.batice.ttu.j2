@@ -12,3 +12,5 @@ $TTL	604800
 {% for vm in groups['all'] %}
 {{ vm }}.{{ mydomain }}.	IN	A	{{ hostvars[vm]['ansible_default_ipv4']['address'] }}
 {% endfor %}
+
+backup.{{ mydomain }}.	IN	A	{{ backup_server_ip }}

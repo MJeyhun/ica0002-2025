@@ -35,3 +35,5 @@ grafana_password: !vault |
           3033
 
 
+backup_server_ip: 192.168.42.5
+backup_server_ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX"

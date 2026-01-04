@@ -20,7 +20,7 @@
 - template:
     dest: /var/cache/bind/db.batice.ttu
     src: db.batice.ttu.j2
-
+  notify: restart bind
 
 - name: Install Bind9 exporter
   apt:
