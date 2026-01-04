@@ -50,10 +50,6 @@
     name: prometheus-mysqld-exporter
     state: present
 
-- name: Remove autostart block policy after install
-  file:
-    path: /usr/sbin/policy-rc.d
-    state: absent
 
 - name: Cnf files for exporter
   template:

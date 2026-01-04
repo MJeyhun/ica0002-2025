@@ -26,6 +26,12 @@
     dest: /var/lib/grafana/dashboards/main.json
   notify: Restart Grafana
 
+- name: Upload main.json to the server
+  copy:
+    src: agama_logs.json
+    dest: /var/lib/grafana/dashboards/agama_logs.json
+  notify: Restart Grafana
+
 - name: Provision  Grafana dashboards
   template:
     src: dashboards.yaml.j2

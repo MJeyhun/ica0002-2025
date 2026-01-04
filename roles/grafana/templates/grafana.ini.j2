@@ -1,7 +1,12 @@
 [server]
-root_url = http://{{ hostvars[groups['grafana_servers'][0]]['ansible_host'] }}:{{ hostvars[groups['grafana_servers'][0]]['ansible_port'] + 58 }}/grafana/
+root_url = http://{{ groups['grafana_servers'][0] }}:{{ hostvars[groups['grafana_servers'][0]]['ansible_port'] + 58 }}/grafana/
 serve_from_sub_path = true
 
 [security]
 admin_user = {{ grafana_user }}
 admin_password = {{ grafana_password }}
+
+[auth.anonymous]
+enabled = true
+org_name = Main Org.
+org_role = Viewer
