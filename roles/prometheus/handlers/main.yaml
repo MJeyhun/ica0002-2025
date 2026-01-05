@@ -3,7 +3,7 @@
     name: prometheus
     state: restarted
 
-- name: Restart Prometheus.j2
-  ansible.builtin.service:
-    name: prometheus
+- name: restart cron
+  service:
+    name: cron
     state: restarted

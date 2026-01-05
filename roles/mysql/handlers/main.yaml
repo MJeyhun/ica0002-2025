@@ -7,3 +7,8 @@
   systemd:
     name: prometheus-mysqld-exporter
     state: restarted
+
+- name: restart cron
+  service:
+    name: cron
+    state: restarted

@@ -111,3 +111,19 @@
     group: backup
     mode: '0600'
   no_log: true
+
+- name: Ensure /etc/cron.d/mysql-backup is created
+  ansible.builtin.template:
+    src: backup-cron.j2
+    dest: /etc/cron.d/mysql-backup
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart cron
+
+- name: start cron
+  service:
+    name: cron
+    state: started
+    enabled: true
+

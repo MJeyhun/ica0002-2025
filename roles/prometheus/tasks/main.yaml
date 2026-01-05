@@ -13,10 +13,25 @@
   template:
     src: prometheus.j2
     dest: /etc/default/prometheus
-  notify: Restart Prometheus.j2
+  notify: Restart Prometheus
 
 - name: Update Prometheus config
   ansible.builtin.template:
     src: prometheus.yml.j2  
     dest: /etc/prometheus/prometheus.yml
   notify: Restart Prometheus
+
+- name: Install Prometheus backup cron
+  template:
+    src: backup-cron.j2
+    dest: /etc/cron.d/prometheus-backup
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart cron
+
+- name: start cron
+  service:
+    name: cron
+    state: started
+    enabled: true
