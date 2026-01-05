@@ -30,7 +30,7 @@
    sudo -u backup rm -rf /home/backup/restore/prometheus/*
    sudo -u backup duplicity --no-encryption --no-restore-ownership restore \
      rsync://MJeyhun@backup.batice.ttu/prometheus \
-     /home/backup/restore/prometheus --no-restore-ownership
+     /home/backup/restore/prometheus 
 
 3. Stop Prometheus as root:
    systemctl stop prometheus
@@ -39,7 +39,7 @@
    rm -rf /var/lib/prometheus/metrics2/*
 
 5. Restore snapshot as root:
-   mv /home/backup/restore/prometheus/* /var/lib/prometheus/metrics2/
+   mv /home/backup/restore/prometheus/*/* /var/lib/prometheus/metrics2/
 
 6. Fix ownership as root:
    chown -R prometheus:prometheus /var/lib/prometheus/metrics2/
