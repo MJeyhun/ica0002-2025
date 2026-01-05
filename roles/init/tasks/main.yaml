@@ -68,3 +68,17 @@
     owner: backup
     group: backup
     mode: '0644'
+
+- name: Ensure restore directory exists
+  file:
+    path: /home/backup/restore
+    state: directory
+    owner: backup
+    group: backup
+    mode: "0750"
+
+- name: Install duplicity
+  apt:
+    name: duplicity
+    state: present
+    update_cache: yes

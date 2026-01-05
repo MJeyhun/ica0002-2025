@@ -24,4 +24,12 @@
   systemd:
     name: loki
     enabled: true
-    state: started 
+    state: started
+
+- name: Ensure Loki backup directory exists
+  file:
+    path: /home/backup/loki
+    state: directory
+    owner: backup
+    group: backup
+    mode: "0750" 
