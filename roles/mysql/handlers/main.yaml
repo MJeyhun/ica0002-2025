@@ -12,3 +12,26 @@
   service:
     name: cron
     state: restarted
+
+- name: Reset MySQL source
+  community.mysql.mysql_replication:
+    mode: "{{ item }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  loop:
+    - stopreplica
+    - resetprimary
+  when: inventory_hostname == mysql_primary
+
+- name: Reset MySQL replica
+  community.mysql.mysql_replication:
+    mode: "{{ item }}"
+    primary_host: "{{ mysql_primary }}"
+    primary_user: "{{ replication_username }}"
+    primary_password: "{{ replication_user_password }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  loop:
+    - stopreplica
+    - changeprimary
+    - resetreplica
+    - startreplica
+  when: inventory_hostname != mysql_primary

@@ -20,17 +20,16 @@
     path: /var/lib/grafana/dashboards
     state: directory
 
-- name: Upload main.json to the server
-  copy:
-    src: main.json
-    dest: /var/lib/grafana/dashboards/main.json
+- name: Upload dashboards json to the server
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/var/lib/grafana/dashboards/{{ item }}"
   notify: Restart Grafana
-
-- name: Upload main.json to the server
-  copy:
-    src: agama_logs.json
-    dest: /var/lib/grafana/dashboards/agama_logs.json
-  notify: Restart Grafana
+  loop:
+    - main.json
+    - backups.json
+    - agama_logs.json
+    - mysql.json
 
 - name: Provision  Grafana dashboards
   template:

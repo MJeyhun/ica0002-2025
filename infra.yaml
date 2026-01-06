@@ -25,13 +25,13 @@
       - agama
       - uwsgi
       - nginx
-    tags: w
+    tags: mx
 
   - name: Database server
     hosts: db_servers
     roles:
       - mysql
-    tags: db
+    tags: mx
 
   - name: Prometheus Server
     hosts: prometheus_servers
