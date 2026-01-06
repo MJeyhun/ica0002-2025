@@ -983,7 +983,8 @@
                 "value": 0.5
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
@@ -1110,5 +1111,5 @@
   "timezone": "browser",
   "title": "Main",
   "uid": "ce9wbbjq8x9tsd",
-  "version": 2
+  "version": 1
 }

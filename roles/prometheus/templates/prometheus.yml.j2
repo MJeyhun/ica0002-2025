@@ -58,3 +58,9 @@ scrape_configs:
       - targets: [{% for vm in groups['all'] %}'{{ vm }}:9080'{% if not loop.last %}, {% endif %}{% endfor %}]
     scrape_interval: 5s
     scrape_timeout: 5s
+
+  - job_name: backup
+    static_configs:
+      - targets: [backup.{{ mydomain }}:9111]
+    scrape_interval: 5s
+    scrape_timeout: 5s
