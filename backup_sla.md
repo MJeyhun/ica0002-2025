@@ -8,52 +8,53 @@ We back up services that satisfy at least one of these criteria:
  - are not feasible (or very costly) to restore by other means
 
 Services that are backed up:
+ - MySQL (agama database)
+ - Prometheus
  - _____
- - _____
- - _____
+ - Ansible code git repository
 
 
 ## Schedule
 
-_____ backups are created every _____; it takes up to _____ to create and store the backup.
+Full backups for mysql, prometheus, and loki are created once per day; it takes up to a few minutes to create and store the backup.
 
-_____ backups are created every _____; it takes up to _____ to create and store the backup.
+Incremental backups for prometheus, and loki are created once per day; it takes up to a few minutes to create and store the backup.
 
-_____ backups are created every _____; it takes up to _____ to create and store the backup.
+Prometheus and Loki backups are created once per day; it takes up to a few minutes to create and store the backup.
 
-All backups are started automatically by _____.
+Infrastructure code and configuration backups are created every day; it takes up to 5 minutes to create and store the backup.
+
+All backups are started automatically by cron jobs.
 
 Backup RPO (recovery point objective) is:
- - _____ for _____
- - _____ for _____
- - _____ for _____
-
+ - 24 hours for MySQL
+ - 24 hours for Prometheus
+ - 24 hours for Loki
+ - 24 hours for Infrastructure code and configuration
 
 ## Storage
 
-_____ and _____ backups are uploaded to the backup server.
+MySQL, Prometheus, and Loki backups are uploaded to the backup server.
 
-_____ is mirrored to the internal Git server.
+Infrastructure code and configuration is mirrored to the internal Git server.
 
-Backup data from both servers will be synchronized to encrypted AWS S3 bucket in future (work in progress).
 
 
 ## Retention
 
-_____ backups are stored for _____; _____ versions (recovery points) are available to restore.
+MySQL backups are stored for several days; multiple recovery points are available to restore.
 
-_____ backups are stored for _____; _____ versions are available to restore.
+Prometheus backups are stored for several days; multiple recovery points are available to restore.
 
-_____ backups are stored for _____; _____ versions are available to restore.
-
+Loki backups are stored for several days; multiple recovery points are available to restore.
 
 ## Usability checks
 
-_____ backups are verified every _____ by _____.
+MySQL backups are verified on demand by performing a test restore and validating database contents.
 
-_____ backups are verified every _____ by _____.
+Prometheus backups are verified on demand by restoring snapshots and validating historical metrics in Grafana.
 
-_____ backups are verified every _____ by _____.
+Loki backups are verified on demand by restoring data and validating historical logs in Grafana.
 
 
 ## Restore process
@@ -61,8 +62,10 @@ _____ backups are verified every _____ by _____.
 Service is recovered from the backup in case of an incident, and when service cannot be restored in any other way.
 
 RTO (recovery time objective) is:
- - _____ for _____
- - _____ for _____
- - _____ for _____
 
-Detailed backup restore procedure is documented in the [backup_restore.md](./backup_restore.md).
+    30 minutes for MySQL
+
+    30 minutes for Prometheus
+
+    30 minutes for Loki
+
