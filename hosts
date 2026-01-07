@@ -14,9 +14,6 @@ MJeyhun-2
 [prometheus_servers]
 MJeyhun-2
 
-[docker]
-MJeyhun-2
-MJeyhun-1
 
 [grafana_servers]
 MJeyhun-1
