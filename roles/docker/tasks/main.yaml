@@ -1,0 +1,21 @@
+- name: Install Docker and prerequisites
+  apt:
+    name:
+      - docker.io
+      - python3-docker
+    state: present
+    update_cache: yes
+
+- name: Ensure Docker service is running
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+
+- name: Install Loki Docker plugin
+  community.docker.docker_plugin:  
+    plugin_name: grafana/loki-docker-driver:latest
+    state: enable
+
+

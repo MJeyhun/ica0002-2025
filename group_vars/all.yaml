@@ -1,3 +1,8 @@
+corp_nets:
+  - 192.168.42.0/23
+  - 127.0.0.0/8
+
+
 mysql_primary: "{{ groups['db_servers'][0] }}"
 mysql_backup_host: "{{ groups['db_servers'] | reject('eq', mysql_primary) | first | default(mysql_primary) }}" 
 
@@ -61,3 +66,6 @@ replication_user_password: !vault |
           3334
 
 node_id: "{{ (ansible_port / 100) | int }}"
+
+grafana_port: 3001
+agama_port: 8001

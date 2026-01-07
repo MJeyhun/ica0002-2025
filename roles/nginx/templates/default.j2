@@ -5,8 +5,8 @@ server {
     server_name _;
         {% if inventory_hostname in groups['web_servers'] %}
         location / {
-                uwsgi_pass localhost:5000;
-                include uwsgi_params;
+
+		proxy_pass http://localhost:{{ agama_port }};
 		access_log /var/log/nginx/access.log;
 		access_log /var/log/nginx/agama.log agama_format;
         }
@@ -24,7 +24,7 @@ server {
 	{% if inventory_hostname in groups['grafana_servers'] %}
         location /grafana {
 		proxy_set_header Host $http_host;
-                proxy_pass http://localhost:3000;
+                proxy_pass http://{{ inventory_hostname }}:{{ grafana_port }};
         }
 	{% endif %}
 

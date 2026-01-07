@@ -40,18 +40,12 @@
   no_log: true
 
 
-- name: Disable service autostart during package installation
-  copy:
-    dest: /usr/sbin/policy-rc.d
-    mode: '0755'
-    content: |
-      #!/bin/sh
-      exit 101
 
 - name: Install MySQL exporter
   apt:
     name: prometheus-mysqld-exporter
     state: present
+    policy_rc_d: 101
 
 
 - name: Cnf files for exporter

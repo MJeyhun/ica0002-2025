@@ -1,7 +1,9 @@
 acl corpnets {
-    192.168.42.0/23;
-    127.0.0.0/8;
+    {% for n in corp_nets %}
+    {{ n }};
+    {% endfor %}
 };
+
 
 options {
 

@@ -1,0 +1,51 @@
+- name: Update APT cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install Grafana OSS
+  apt:
+    name: grafana
+    state: present
+
+
+- name: Provision Prometheus and Loki as default datasource
+  template:
+    src: datasources.yaml.j2
+    dest: /etc/grafana/provisioning/datasources/datasources.yaml
+  notify: Restart Grafana
+
+- name: Ensure destination directory exists
+  file:
+    path: /var/lib/grafana/dashboards
+    state: directory
+
+- name: Upload dashboards json to the server
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/var/lib/grafana/dashboards/{{ item }}"
+  notify: Restart Grafana
+  loop:
+    - main.json
+    - backups.json
+    - agama_logs.json
+    - mysql.json
+
+- name: Provision  Grafana dashboards
+  template:
+    src: dashboards.yaml.j2
+    dest: /etc/grafana/provisioning/dashboards/dashboards.yaml
+  notify: Restart Grafana
+
+- name: Start and enable Grafana server
+  service:
+    name: grafana-server
+    state: started
+    enabled: true
+
+- name: Apply Grafana configuration from template
+  template:
+    src: grafana.ini.j2
+    dest: /etc/grafana/grafana.ini
+  notify: Restart Grafana
+

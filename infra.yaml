@@ -18,12 +18,16 @@
       - resolver
     tags: r
 
+  - name: Docker
+    hosts: docker
+    roles:
+      - docker
+    tags: do
 
   - name: Web Servers
     hosts: web_servers
     roles:
       - agama
-      - uwsgi
       - nginx
     tags: mx
 
@@ -58,3 +62,4 @@
     roles:
       - promtail
     tags: pt
+
