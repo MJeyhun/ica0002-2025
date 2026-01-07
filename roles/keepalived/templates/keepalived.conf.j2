@@ -1,0 +1,26 @@
+vrrp_script check_haproxy {                 
+    script: "/home/keepalived_script/check_haproxy.sh" 
+    weight 20                              
+    interval 1               
+}
+vrrp_instance agama {             
+    interface ens3
+    virtual_router_id 1
+    priority {% if inventory_hostname == 'MJeyhun-1' %}100{% else %}99{% endif %}
+    advert_int 1                            
+    virtual_ipaddress {                     
+        192.168.{{ (hostvars['MJeyhun-1']['ansible_default_ipv4']['address'].split('.')[2] | int + 58) }}.{{ (hostvars['MJeyhun-1']['ansible_default_ipv4']['address'].split('.')[3]) }}/24                   
+    }
+    unicast_peer {                          
+        {% for host in groups['keepalived'] if host != inventory_hostname %}
+        {{ hostvars[host]['ansible_default_ipv4']['address'] }}
+        {% endfor %}
+    }
+    track_script {
+        check_haproxy
+    }
+    authentication {
+        auth_type AH
+        auth_pass {{ keepalivedpass }} 
+    }
+}

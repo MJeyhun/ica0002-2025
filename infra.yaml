@@ -5,6 +5,7 @@
       - init
     tags: i
 
+
   - name: DNS Servers
     hosts: dns_servers
     roles:
@@ -60,3 +61,14 @@
       - promtail
     tags: pt
 
+  - name: Haproxy
+    hosts: haproxy
+    roles:
+      - haproxy
+    tags: ha
+
+  - name: Keepalived
+    hosts: keepalived
+    roles:
+      - keepalived
+    tags: k

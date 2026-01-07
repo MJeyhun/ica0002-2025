@@ -1,0 +1,43 @@
+- name: Install keepalived
+  apt:
+    name: keepalived
+    state: present
+    update_cache: yes
+
+- name: Create keepalived script user
+  user:
+    name: keepalived_script
+    shell: /bin/bash
+    home: /home/keepalived_script
+
+
+- name: Ensure keepalived_script home directory exists
+  ansible.builtin.file:
+    path: /home/keepalived_script
+    state: directory
+    owner: keepalived_script
+    group: keepalived_script
+    mode: '0755'
+
+- name: Upload check script
+  copy:
+    src: check_haproxy.sh
+    dest: /home/keepalived_script/check_haproxy.sh
+    owner: keepalived_script
+    group: keepalived_script
+    mode: '0755'
+
+- name: Deploy keepalived.conf
+  template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+  notify: Restart Keepalived
+  no_log: true
+
+- name: Enable and start Keepalived service
+  ansible.builtin.systemd:
+    name: keepalived
+    enabled: yes
+    state: started
+
+  

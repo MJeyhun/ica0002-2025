@@ -25,9 +25,10 @@
     image: grafana/grafana
     name: grafana
     published_ports: "{{ grafana_port }}:3000"
-    volumes: /opt/grafana:/etc/grafana 
+    volumes: /opt/grafana:/etc/grafana
+    restart_policy: "always"
 
-- name: Create Grafana configuration file from template
+- name: Create Grafana dashboard file
   ansible.builtin.template:
     src: dashboards.yaml.j2
     dest: /opt/grafana/provisioning/dashboards/default.yaml

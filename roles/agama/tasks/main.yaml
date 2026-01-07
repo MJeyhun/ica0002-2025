@@ -3,13 +3,14 @@
     path: /opt/agama
     state: directory
 
-- name: Download Agama files
+- name: Download Agama app and Dockerfile
   get_url:
     url: "{{ item.url }}"
     dest: "/opt/agama/{{ item.dest }}"
   loop:
-    - { url: "https://raw.githubusercontent.com/hudolejev/agama/refs/heads/master/agama.py", dest: "agama.py" }
-    - { url: "https://raw.githubusercontent.com/hudolejev/agama/refs/heads/master/Dockerfile", dest: "Dockerfile" }
+    - { url: "https://raw.githubusercontent.com/hudolejev/agama/main/agama.py", dest: "agama.py" }
+    - { url: "https://raw.githubusercontent.com/hudolejev/agama/main/Dockerfile", dest: "Dockerfile" }
+
 
 - name: Build Agama Docker image
   community.docker.docker_image:
@@ -20,16 +21,14 @@
 
 - name: Start Agama Docker container
   community.docker.docker_container:
-    name: agama
+    name: "agama_{{ item }}"
     image: agama
     state: started
     published_ports:
-      - "{{ agama_port }}:8000"  
+      - "{{ agama_port + item - 1 }}:8000"  
     env:
       AGAMA_DATABASE_URI: "mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}"
-    log_driver: grafana/loki-docker-driver
-    log_options:
-      loki-url: "http://{{ groups['loki_servers'][0] }}:3100/loki/api/v1/push"
     volumes:
       - /opt/agama:/opt/agama
-  no_log: true
+    restart_policy: "always"
+  loop: "{{ range(1, agama_container_count + 1) | list }}"
