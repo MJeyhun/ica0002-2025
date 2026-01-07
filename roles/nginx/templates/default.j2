@@ -24,7 +24,7 @@ server {
 	{% if inventory_hostname in groups['grafana_servers'] %}
         location /grafana {
 		proxy_set_header Host $http_host;
-                proxy_pass http://{{ inventory_hostname }}:{{ grafana_port }};
+                proxy_pass http://localhost:{{ grafana_port }};
         }
 	{% endif %}
 

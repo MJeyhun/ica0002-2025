@@ -64,3 +64,15 @@ scrape_configs:
       - targets: [backup.{{ mydomain }}:9111]
     scrape_interval: 5s
     scrape_timeout: 5s
+
+  - job_name: haproxy
+    static_configs:
+      - targets: [{% for vm in groups['haproxy'] %}'{{ vm }}:9101'{% if not loop.last %}, {% endif %}{% endfor %}] 
+    scrape_interval: 5s
+    scrape_timeout: 5s
+
+  - job_name: keepalived
+    static_configs:
+      - targets: [{% for vm in groups['keepalived'] %}'{{ vm }}:9165'{% if not loop.last %}, {% endif %}{% endfor %}]
+    scrape_interval: 5s
+    scrape_timeout: 5s

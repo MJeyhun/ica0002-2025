@@ -1,0 +1,10 @@
+Description=Prometheus Keepalived Exporter
+After=network.target
+
+[Service]
+User=root
+ExecStart=/usr/bin/keepalived-exporter --web.listen-address ":9165" --web.telemetry-path "/metrics"
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

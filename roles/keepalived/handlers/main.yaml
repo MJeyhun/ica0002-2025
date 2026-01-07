@@ -2,3 +2,8 @@
   ansible.builtin.service:
     name: keepalived
     state: restarted
+
+- name: Restart prometheus-keepalived-exporter
+  ansible.builtin.service:
+    name: prometheus-keepalived-exporter
+    state: restarted

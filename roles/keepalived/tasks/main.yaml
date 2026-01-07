@@ -4,6 +4,26 @@
     state: present
     update_cache: yes
 
+- name: Download Keepalived exporter package
+  ansible.builtin.get_url:
+    url: "https://github.com/mehdy/keepalived-exporter/releases/download/v1.7.0/keepalived-exporter_1.7.0_linux_amd64.deb"
+    dest: "/opt/keepalived-exporter_1.7.0_linux_amd64.deb"
+
+- name: Install Keepalived exporter
+  ansible.builtin.apt:
+    deb: "/opt/keepalived-exporter_1.7.0_linux_amd64.deb"
+    state: present
+
+- name: Deploy Keepalived Exporter service file
+  ansible.builtin.template:
+    src: keepalived-exporter.service.j2
+    dest: /etc/systemd/system/prometheus-keepalived-exporter.service
+  notify: Restart prometheus-keepalived-exporter
+
+- name: Reload Daemon
+  systemd:
+    daemon_reload: true
+
 - name: Create keepalived script user
   user:
     name: keepalived_script
@@ -40,4 +60,8 @@
     enabled: yes
     state: started
 
-  
+- name: Ensure prometheus-keepalived-exporter service is enabled and started
+  ansible.builtin.service:
+    name: prometheus-keepalived-exporter
+    state: started
+    enabled: true

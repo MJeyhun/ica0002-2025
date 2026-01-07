@@ -1,5 +1,5 @@
 vrrp_script check_haproxy {                 
-    script: "/home/keepalived_script/check_haproxy.sh" 
+    script /home/keepalived_script/check_haproxy.sh 
     weight 20                              
     interval 1               
 }

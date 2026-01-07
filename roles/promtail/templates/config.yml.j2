@@ -48,3 +48,10 @@ scrape_configs:
           job: agama
           hostname: "{{ inventory_hostname }}"
           __path__: /var/log/nginx/agama.log
+  
+  - job_name: haproxy_syslog
+    syslog:
+      listen_address: 0.0.0.0:8814
+      labels:
+        job: haproxy
+        hostname: "{{ inventory_hostname }}"

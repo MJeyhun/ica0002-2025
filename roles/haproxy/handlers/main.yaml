@@ -2,3 +2,8 @@
   service:
     name: haproxy
     state: restarted
+
+- name: prometheus-haproxy-exporter restart
+  service:
+    name: prometheus-haproxy-exporter
+    state: restarted
