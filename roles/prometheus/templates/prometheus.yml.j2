@@ -37,7 +37,7 @@ scrape_configs:
 
   - job_name: bind9
     static_configs:
-      - targets: ['ns-1:9119','ns-2:9119']
+      - targets: ['ns-1:9119','ns-2:9119','localhost:9119']
     scrape_interval: 5s
     scrape_timeout: 5s
 

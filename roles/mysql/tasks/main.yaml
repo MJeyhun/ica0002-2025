@@ -55,17 +55,18 @@
     owner: prometheus
     mode: '0600'
   no_log: true
+  notify: Restart mysqld-exporter
 
 - name: Create MySQL user for the exporter
   community.mysql.mysql_user:
     name: "{{ mysql_exporter_username }}"
     password: "{{ mysql_exporter_password }}"
     priv: "*.*:PROCESS,REPLICATION CLIENT"
-    host: "%"
+    host: "localhost"
     login_unix_socket: /var/run/mysqld/mysqld.sock
     column_case_sensitive: false
   no_log: true
-  notify: Restart MySQL
+  notify: Restart mysqld-exporter
 
 - name: Configure mysqld_exporter systemd service to use .my.cnf
   ansible.builtin.lineinfile:
@@ -156,6 +157,5 @@
     value: "{{ item.value }}"
   loop: "{{ db_records | dict2items }}"
   run_once: True
-  no_log: true
   notify: reload rndc
   delegate_to: "{{ groups['dns_primary'][0] }}"

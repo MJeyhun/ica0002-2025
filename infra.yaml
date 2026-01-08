@@ -32,7 +32,7 @@
     hosts: db_servers
     roles:
       - mysql
-    tags: mx
+    tags: db
 
   - name: Prometheus Server
     hosts: prometheus_servers
