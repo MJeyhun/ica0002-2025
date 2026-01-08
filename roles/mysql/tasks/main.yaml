@@ -157,5 +157,6 @@
     value: "{{ item.value }}"
   loop: "{{ db_records | dict2items }}"
   run_once: True
+  no_log: true
   notify: reload rndc
   delegate_to: "{{ groups['dns_primary'][0] }}"
