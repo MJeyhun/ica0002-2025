@@ -39,7 +39,7 @@ ring logbuffer
     size 65536
     timeout connect 10s
     timeout server 20s
-    server promtail 127.0.0.1:8814
+    server promtail localhost:8814
 
 frontend my_ha_frontend
     bind :{{ haproxy_port }}

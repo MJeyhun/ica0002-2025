@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 4,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -598,7 +598,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "up{job=\"bind9\"}",
+          "expr": "bind_up",
           "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A"
@@ -1425,5 +1425,5 @@
   "timezone": "browser",
   "title": "Main",
   "uid": "ce9wbbjq8x9tsd",
-  "version": 2
+  "version": 1
 }

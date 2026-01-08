@@ -14,12 +14,14 @@
     src: prometheus.j2
     dest: /etc/default/prometheus
   notify: Restart Prometheus
+  no_log: true
 
 - name: Update Prometheus config
   ansible.builtin.template:
     src: prometheus.yml.j2  
     dest: /etc/prometheus/prometheus.yml
   notify: Restart Prometheus
+  no_log: true
 
 - name: Install Prometheus backup cron
   template:
@@ -42,7 +44,7 @@
     key_name: "{{ update_key_name }}"
     key_algorithm: "{{ update_key_algorithm }}"
     key_secret: "{{ dns_update_key }}"
-    server: "127.0.0.1"
+    server: "localhost"
     zone: "{{ mydomain }}."
     record: "{{ item.key }}"
     type: "CNAME"

@@ -22,7 +22,7 @@ options {
 };
 
 statistics-channels {
-  inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+  inet localhost port 8053 allow { localhost; };
 };
 
 key "{{ update_key_name }}" {

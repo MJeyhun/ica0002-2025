@@ -1,4 +1,4 @@
 36 23 * * * backup cp -r /tmp/loki/tsdb-shipper-active /home/backup/loki/ && cp -r /tmp/loki/wal /home/backup/loki/ && chown -R backup:backup /home/backup/loki
-46 23 * * * backup duplicity --no-encryption full /home/backup/loki/ rsync://MJeyhun@backup.batice.ttu/loki
-48 23 * * * backup duplicity --no-encryption incremental /home/backup/loki/ rsync://MJeyhun@backup.batice.ttu/loki
+46 23 * * * backup duplicity --no-encryption full /home/backup/loki/ rsync://MJeyhun@backup.{{ mydomain }}/loki
+48 23 * * * backup duplicity --no-encryption incremental /home/backup/loki/ rsync://MJeyhun@backup.{{ mydomain }}/loki
 

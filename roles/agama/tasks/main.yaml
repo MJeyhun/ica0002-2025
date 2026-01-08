@@ -32,13 +32,14 @@
       - /opt/agama:/opt/agama
     restart_policy: "always"
   loop: "{{ range(1, agama_container_count + 1) | list }}"
+  no_log: true
 
 - name: Add CNAME records for Web Servers
   nsupdate:
     key_name: "{{ update_key_name }}"
     key_algorithm: "{{ update_key_algorithm }}"
     key_secret: "{{ dns_update_key }}"
-    server: "127.0.0.1"
+    server: "localhost"
     zone: "{{ mydomain }}."
     record: "{{ item.key }}"
     type: "CNAME"
