@@ -2,7 +2,6 @@
   apt:
     name: 
       - haproxy
-      - prometheus-haproxy-exporter
     state: present
 
 
@@ -12,17 +11,28 @@
     dest: /etc/haproxy/haproxy.cfg
   notify: restart haproxy
 
+- name: Haproxy started
+  ansible.builtin.service:
+    name: haproxy
+    enabled: yes
+    state: started
+
+- name: Install prometheus haproxy exporter
+  ansible.builtin.apt:
+    name: prometheus-haproxy-exporter
+    state: present
+
 - name: Config file for exporter
   template:
     src: prometheus-haproxy-exporter.j2
     dest: /etc/default/prometheus-haproxy-exporter
   notify: prometheus-haproxy-exporter restart
 
-
-- name: start HAProxy service and exporter
-  service:
-    name: "{{ item }}"
+- name: Ensure haproxy-exporter is enabled and running
+  ansible.builtin.service:
+    name: prometheus-haproxy-exporter
     state: started
-  loop:
-    - haproxy
-    - prometheus-haproxy-exporter
+    enabled: true
+
+
+

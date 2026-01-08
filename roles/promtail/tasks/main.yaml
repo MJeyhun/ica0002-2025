@@ -37,6 +37,8 @@
     mode: "0644"
   notify: restart promtail
 
+
+
 - name: Enable and start Promtail
   systemd:
     name: promtail

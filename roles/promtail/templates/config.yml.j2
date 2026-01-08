@@ -9,21 +9,22 @@ clients:
   - url: "http://{{ groups['loki_servers'][0] }}:3100/loki/api/v1/push"
 
 scrape_configs:
-  - job_name: syslog
+  - job_name: system
     static_configs:
-      - targets: [localhost]
+      - targets:
+          - localhost
         labels:
-          job: syslog
-          hostname: "{{ inventory_hostname }}"
+          host: {{ inventory_hostname }}
           __path__: /var/log/syslog
 
-  - job_name: agama
-    static_configs:
-      - targets: [localhost]
-        labels:
-          job: agama
-          hostname: "{{ inventory_hostname }}"
-          __path__: /var/log/uwsgi/app/agama.log
+
+#  - job_name: agama
+#    static_configs:
+#      - targets: [localhost]
+#        labels:
+#          job: agama
+#          hostname: "{{ inventory_hostname }}"
+#          __path__: /var/log/uwsgi/app/agama.log
 
   - job_name: nginx_access
     static_configs:
@@ -48,10 +49,12 @@ scrape_configs:
           job: agama
           hostname: "{{ inventory_hostname }}"
           __path__: /var/log/nginx/agama.log
-  
-  - job_name: haproxy_syslog
+ 
+  - job_name: syslog
     syslog:
       listen_address: 0.0.0.0:8814
+      label_structured_data: true
       labels:
         job: haproxy
-        hostname: "{{ inventory_hostname }}"
+        service: haproxy
+        host: {{ inventory_hostname }} 

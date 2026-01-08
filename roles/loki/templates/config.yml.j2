@@ -2,21 +2,36 @@ auth_enabled: false
 
 server:
   http_listen_port: 3100
+  grpc_listen_port: 9096
+  log_level: debug
+  grpc_server_max_concurrent_streams: 1000
 
 common:
-  path_prefix: /var/lib/loki
+  instance_addr: 127.0.0.1
+  path_prefix: /tmp/loki
   storage:
     filesystem:
-      chunks_directory: /var/lib/loki/chunks
-      rules_directory: /var/lib/loki/rules
+      chunks_directory: /tmp/loki/chunks
+      rules_directory: /tmp/loki/rules
   replication_factor: 1
   ring:
     kvstore:
       store: inmemory
 
+query_range:
+  results_cache:
+    cache:
+      embedded_cache:
+        enabled: true
+        max_size_mb: 100
+
+limits_config:
+  ingestion_rate_mb: 10 
+  ingestion_burst_size_mb: 20
+
 schema_config:
   configs:
-    - from: 2024-01-01
+    - from: 2020-10-24
       store: tsdb
       object_store: filesystem
       schema: v13
@@ -24,3 +39,17 @@ schema_config:
         prefix: index_
         period: 24h
 
+pattern_ingester:
+  enabled: true
+  metric_aggregation:
+    loki_address: localhost:3100
+
+ruler:
+  alertmanager_url: http://localhost:9093
+
+frontend:
+  encoding: protobuf
+
+querier:
+  engine:
+    #enable_multi_variant_queries: true
