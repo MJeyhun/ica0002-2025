@@ -134,6 +134,7 @@ prometheus_records:
 nameserver_records:
   ns-1: "{{ groups['dns_secondary'][0] }}"
   ns-2: "{{ groups['dns_secondary'][1] }}"
+  ns-3: "{{ groups['dns_primary'][0] }}"
 
 web_servers_records:
   www-1: "{{ groups['web_servers'][0] }}"
