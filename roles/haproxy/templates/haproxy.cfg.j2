@@ -48,10 +48,10 @@ frontend my_ha_frontend
 
 backend my_ha_backend
 {% for i in range(1, agama_container_count + 1) %}
-    server docker{{ i }} lb-1:{{ agama_port + i - 1 }} check
+    server docker{{ i }} www-1:{{ agama_port + i - 1 }} check
 {% endfor %}
 {% for i in range(1, agama_container_count + 1) %}
-    server docker{{ i + agama_container_count }} lb-2:{{ agama_port + i - 1 }} check
+    server docker{{ i + agama_container_count }} www-2:{{ agama_port + i - 1 }} check
 {% endfor %}
 
 listen stats

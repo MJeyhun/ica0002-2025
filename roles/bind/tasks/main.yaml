@@ -27,6 +27,16 @@
     - reload rndc
   when: inventory_hostname in groups['dns_primary']
 
+- template:
+    dest: "/var/cache/bind/db.rev"
+    src: db.rev.j2
+  no_log: true
+  notify:
+    - restart bind
+  when: inventory_hostname in groups['dns_primary']
+
+
+
 - name: Flush
   meta: flush_handlers
 

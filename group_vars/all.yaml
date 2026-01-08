@@ -132,8 +132,8 @@ prometheus_records:
   prometheus: "{{ groups['prometheus_servers'][0] }}"
 
 nameserver_records:
-  ns-1: "{{ groups['dns_primary'][0] }}"
-  ns-2: "{{ groups['dns_secondary'][0] }}"
+  ns-1: "{{ groups['dns_secondary'][0] }}"
+  ns-2: "{{ groups['dns_secondary'][1] }}"
 
 web_servers_records:
   www-1: "{{ groups['web_servers'][0] }}"
