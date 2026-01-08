@@ -59,7 +59,7 @@
     key_name: "{{ update_key_name }}"
     key_algorithm: "{{ update_key_algorithm }}"
     key_secret: "{{ dns_update_key }}"
-    server: "localhost"
+    server: "{{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}"
     zone: "{{ mydomain }}."
     record: "{{ item.key }}"
     type: "CNAME"

@@ -2,12 +2,12 @@ zone "{{ mydomain }}" {
 {% if inventory_hostname in groups['dns_primary'] %}
   type primary;
   allow-update { key nsupdate.key; };
-  allow-transfer {localhost;key transfer.key;};
+  allow-transfer {127.0.0.1;key transfer.key;};
   notify yes;
     	
 {% else %}
   type secondary;
-  allow-transfer {localhost;};
+  allow-transfer {127.0.0.1;};
   primaries {
 {% for vm in groups['dns_primary'] %}
       {{ hostvars[vm]['ansible_default_ipv4']['address'] }};
@@ -23,12 +23,12 @@ zone "168.192.in-addr.arpa" {
 {% if inventory_hostname in groups['dns_primary'] %}
   type primary;
   allow-update { key nsupdate.key; };
-  allow-transfer {localhost;key transfer.key;};
+  allow-transfer {127.0.0.1;key transfer.key;};
   notify yes;
 
 {% else %}
   type secondary;
-  allow-transfer {localhost;};
+  allow-transfer {127.0.0.1;};
   primaries {
 {% for vm in groups['dns_primary'] %}
       {{ hostvars[vm]['ansible_default_ipv4']['address'] }};
