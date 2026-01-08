@@ -667,8 +667,8 @@
           },
           "direction": "backward",
           "editorMode": "code",
-          "expr": "100 * (\r\n  rate({filename=\"/var/log/nginx/agama.log\"} |~ \"^[23]\\\\d\\\\d \" [7d])\r\n/\r\n  rate({filename=\"/var/log/nginx/agama.log\"}[7d])\r\n)",
-          "legendFormat": "{{hostname}}",
+          "expr": "100 * (\r\n  sum(rate({job=\"haproxy\", service=\"haproxy\"} |~ \"^[23]\\\\d\\\\d \" [7d]))\r\n  /\r\n  sum(rate({job=\"haproxy\", service=\"haproxy\"} |~ \"^\\\\d{3} \" [7d]))\r\n)",
+          "legendFormat": "{{host}}",
           "queryType": "range",
           "refId": "A"
         }
@@ -1209,7 +1209,7 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "ms"
         },
         "overrides": []
       },
@@ -1245,8 +1245,8 @@
           },
           "direction": "backward",
           "editorMode": "code",
-          "expr": "avg_over_time(\r\n  {filename=\"/var/log/nginx/agama.log\"}\r\n  | regexp \"^[0-9]{3} (?P<request_time>[0-9.]+)\"\r\n  | unwrap request_time\r\n  [7d]\r\n)",
-          "legendFormat": "{{hostname}}",
+          "expr": "avg(\r\n  avg_over_time(\r\n    {job=\"haproxy\"}\r\n    |~ \"\\\\d{3} \\\\d+\"\r\n    | regexp \"(?P<status_code>[0-9]{3}) (?P<request_time>[0-9.]+)\"\r\n    | unwrap request_time\r\n    [7d]\r\n  )\r\n)",
+          "legendFormat": "{{host}}",
           "queryType": "range",
           "refId": "A"
         }
@@ -1425,5 +1425,5 @@
   "timezone": "browser",
   "title": "Main",
   "uid": "ce9wbbjq8x9tsd",
-  "version": 1
+  "version": 2
 }
