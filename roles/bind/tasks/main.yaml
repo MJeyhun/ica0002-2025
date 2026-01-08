@@ -3,11 +3,11 @@
     name: bind9
     state: present
 
-- name: Enable bind9
-  service:
-    name: bind9
-    state: started
-    enabled: true
+- name: Install dnspython
+  ansible.builtin.apt:
+    name: python3-dnspython
+    state: present
+
 
 - template:
     dest: /etc/bind/named.conf.{{ item }}
@@ -18,9 +18,24 @@
   notify: restart bind
 
 - template:
-    dest: /var/cache/bind/db.batice.ttu
+    dest: "/var/cache/bind/db.{{ mydomain }}"
     src: db.batice.ttu.j2
-  notify: restart bind
+    force: no
+  no_log: true
+  notify:
+    - restart bind
+    - reload rndc
+  when: inventory_hostname in groups['dns_primary']
+
+- name: Flush
+  meta: flush_handlers
+
+
+- name: Enable bind9
+  service:
+    name: bind9
+    state: started
+    enabled: true
 
 - name: Install Bind9 exporter
   apt:
@@ -33,3 +48,36 @@
     state: started
     enabled: true
 
+
+- name: Add A records
+  nsupdate:
+    key_name: "{{ update_key_name }}"
+    key_algorithm: "{{ update_key_algorithm }}"
+    key_secret: "{{ dns_update_key }}"
+    server: "127.0.0.1"
+    zone: "{{ mydomain }}."
+    record: "{{ item.key }}"
+    type: "A"
+    value: "{{ item.value }}"
+  loop: "{{ dns_a_records | dict2items }}"
+  run_once: True
+  no_log: true
+  when: inventory_hostname in groups['dns_primary']
+  notify: reload rndc
+
+
+- name: Add CNAME records for nameserver
+  nsupdate:
+    key_name: "{{ update_key_name }}"
+    key_algorithm: "{{ update_key_algorithm }}"
+    key_secret: "{{ dns_update_key }}"
+    server: "127.0.0.1"
+    zone: "{{ mydomain }}."
+    record: "{{ item.key }}"
+    type: "CNAME"
+    value: "{{ item.value }}"
+  loop: "{{ nameserver_records | dict2items }}"
+  run_once: True
+  no_log: true
+  notify: reload rndc
+  delegate_to: "{{ groups['dns_primary'][0] }}"

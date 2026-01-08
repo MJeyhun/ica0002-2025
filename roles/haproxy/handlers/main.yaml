@@ -8,3 +8,5 @@
     name: prometheus-haproxy-exporter
     state: restarted
 
+- name: reload rndc
+  command: rndc reload

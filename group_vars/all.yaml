@@ -1,8 +1,16 @@
+dns_a_records:
+  backup: 192.168.42.5 
+  cf: 1.1.1.1
+
 corp_nets:
   - 192.168.42.0/23
   - 127.0.0.0/8
   - 172.17.0.0/16
 
+dns:
+  - 1.1.1.1
+  - 8.8.8.8
+  - 9.9.9.9
 
 mysql_primary: "{{ groups['db_servers'][0] }}"
 mysql_backup_host: "{{ groups['db_servers'] | reject('eq', mysql_primary) | first | default(mysql_primary) }}" 
@@ -89,3 +97,52 @@ prometheus_exporters:
   haproxy:
     port: 9188
 
+transfer_key_name: "transfer.key"
+tranfer_key_algorithm: "hmac-sha256"
+dns_transfer_key: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          34333035343932303231333266383333303164303238613337623533343364316662326439656563
+          3939633566653365656262626135313535313330383533300a353131333735663263613031363466
+          61323763656461323032613563616131396131303733383535303263643965393734353530613239
+          6132383230346363340a383861393031316263613236303830333130613561303031333637616532
+          33356631656237643130316338386235623965643737663764316564613936653130646533383136
+          3033653861663461623562663038643530313934333631366538
+
+
+update_key_name: "nsupdate.key"
+update_key_algorithm: "hmac-sha256"
+dns_update_key: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          39653735326232323663306430323435373934316536303732356231313134653234663065636165
+          3732613931633432373061666361623039333134373266620a323066613530313861366462376637
+          31316637643032633438336234353166306362363764633939376433653439313666323739396232
+          3661353164353262610a393238376661336132356236363364613166356438666332383333356634
+          30373630373139306633633632313663393433373164323633623065643530653536386233666638
+          6535613962613163643036636534353835306239636532653338
+
+
+
+grafana_records:
+  grafana: "{{ groups['grafana_servers'][0] }}"
+
+loki_records:
+  loki: "{{ groups['loki_servers'][0] }}"
+
+prometheus_records:
+  prometheus: "{{ groups['prometheus_servers'][0] }}"
+
+nameserver_records:
+  ns-1: "{{ groups['dns_primary'][0] }}"
+  ns-2: "{{ groups['dns_secondary'][0] }}"
+
+web_servers_records:
+  www-1: "{{ groups['web_servers'][0] }}"
+  www-2: "{{ groups['web_servers'][1] }}"
+
+haproxy_records:
+  lb-1: "{{ groups['haproxy'][0] }}"
+  lb-2: "{{ groups['haproxy'][1] }}"
+
+db_records:
+  db-1: "{{ groups['db_servers'][0] }}"
+  db-2: "{{ groups['db_servers'][1] }}"

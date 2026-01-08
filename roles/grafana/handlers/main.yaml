@@ -4,3 +4,6 @@
     image: grafana/grafana
     state: started
     restart: true
+
+- name: reload rndc
+  command: rndc reload

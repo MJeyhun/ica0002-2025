@@ -8,3 +8,6 @@
   service:
     name: cron
     state: restarted
+
+- name: reload rndc
+  command: rndc reload

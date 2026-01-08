@@ -4,7 +4,7 @@ datasources:
     type: prometheus
     access: proxy
     orgId: 1
-    url: http://{{ groups['prometheus_servers'][0] }}:9090/prometheus
+    url: http://prometheus:9090/prometheus
     uid: be9wall15qn0gf
     isDefault: true
     version: 1
@@ -14,7 +14,7 @@ datasources:
     type: loki
     access: proxy
     orgId: 1
-    url: http://{{ groups['loki_servers'][0] }}:3100   # replace with your Loki VM IP if you don't have a group
+    url: http://loki:3100   # replace with your Loki VM IP if you don't have a group
     uid: loki_datasource_1
     isDefault: false
     version: 1

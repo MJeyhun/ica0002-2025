@@ -31,25 +31,25 @@ scrape_configs:
 
   - job_name: mysql
     static_configs:
-      - targets: [{% for vm in groups['db_servers'] %}'{{ vm }}:9104'{% if not loop.last %}, {% endif %}{% endfor %}]
+      - targets: ['db-1:9104','db-2:9104']
     scrape_interval: 5s
     scrape_timeout: 5s
 
   - job_name: bind9
     static_configs:
-      - targets: [{% for vm in groups['dns_servers'] %}'{{ vm }}:9119'{% if not loop.last %}, {% endif %}{% endfor %}]
+      - targets: ['ns-1:9119','ns-2:9119']
     scrape_interval: 5s
     scrape_timeout: 5s
 
   - job_name: nginx
     static_configs:
-      - targets: [{% for vm in groups['all'] %}'{{ vm }}:9113'{% if not loop.last %}, {% endif %}{% endfor %}]
+      - targets: ['www-1:9113','www-2:9113']
     scrape_interval: 5s
     scrape_timeout: 5s
 
   - job_name: loki
     static_configs:
-      - targets: [{% for vm in groups['loki_servers'] %}'{{ vm }}:3100'{% if not loop.last %}, {% endif %}{% endfor %}]
+      - targets: ['loki:3100']
     scrape_interval: 5s
     scrape_timeout: 5s
 
@@ -67,7 +67,7 @@ scrape_configs:
 
   - job_name: haproxy
     static_configs:
-      - targets: [{% for vm in groups['haproxy'] %}'{{ vm }}:{{ prometheus_exporters['haproxy']['port'] }}'{% if not loop.last %}, {% endif %}{% endfor %}] 
+      - targets: ['lb-1:{{ prometheus_exporters['haproxy']['port'] }}','lb-2:{{ prometheus_exporters['haproxy']['port'] }}'] 
     scrape_interval: 5s
     scrape_timeout: 5s
 

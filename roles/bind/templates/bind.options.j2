@@ -11,10 +11,9 @@ options {
         directory "/var/cache/bind";
 
         forwarders {
-	 1.1.1.1;
-	 8.8.8.8;
-	 9.9.9.9;
-	
+	{% for x in dns %}
+	{{ x }};
+	{% endfor %}		
         };
 
 	forward only;
@@ -24,4 +23,14 @@ options {
 
 statistics-channels {
   inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+};
+
+key "{{ update_key_name }}" {
+        algorithm {{ update_key_algorithm }};
+        secret "{{ dns_update_key }}";
+};
+
+key "{{ transfer_key_name }}" {
+        algorithm {{ tranfer_key_algorithm }};
+        secret "{{ dns_transfer_key }}";
 };

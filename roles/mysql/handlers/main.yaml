@@ -35,3 +35,7 @@
     - resetreplica
     - startreplica
   when: inventory_hostname != mysql_primary
+
+
+- name: reload rndc
+  command: rndc reload

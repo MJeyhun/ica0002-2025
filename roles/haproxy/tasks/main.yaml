@@ -34,5 +34,19 @@
     state: started
     enabled: true
 
-
+- name: Add CNAME records for haproxy
+  nsupdate:
+    key_name: "{{ update_key_name }}"
+    key_algorithm: "{{ update_key_algorithm }}"
+    key_secret: "{{ dns_update_key }}"
+    server: "127.0.0.1"
+    zone: "{{ mydomain }}."
+    record: "{{ item.key }}"
+    type: "CNAME"
+    value: "{{ item.value }}"
+  loop: "{{ haproxy_records | dict2items }}"
+  run_once: True
+  no_log: true
+  notify: reload rndc
+  delegate_to: "{{ groups['dns_primary'][0] }}"
 

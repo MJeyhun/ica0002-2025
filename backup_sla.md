@@ -42,11 +42,11 @@ Infrastructure code and configuration is mirrored to the internal Git server.
 
 ## Retention
 
-MySQL backups are stored for several days; multiple recovery points are available to restore.
+MySQL backups are stored for 30 days; multiple recovery points are available to restore.
 
-Prometheus backups are stored for several days; multiple recovery points are available to restore.
+Prometheus backups are stored for 30 days; multiple recovery points are available to restore.
 
-Loki backups are stored for several days; multiple recovery points are available to restore.
+Loki backups are stored for 30 days; multiple recovery points are available to restore.
 
 ## Usability checks
 
