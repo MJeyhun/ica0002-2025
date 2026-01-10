@@ -71,7 +71,6 @@
     type: "A"
     value: "{{ item.value }}"
   loop: "{{ dns_a_records | dict2items }}"
-  run_once: True
   no_log: true
   when: inventory_hostname in groups['dns_primary']
   notify: reload rndc
@@ -88,7 +87,6 @@
     type: "CNAME"
     value: "{{ item.value }}"
   loop: "{{ nameserver_records | dict2items }}"
-  run_once: True
   no_log: true
+  when: inventory_hostname in groups['dns_primary']
   notify: reload rndc
-  delegate_to: "{{ groups['dns_primary'][0] }}"
