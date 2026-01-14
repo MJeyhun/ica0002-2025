@@ -1,10 +1,10 @@
-Sun Jan 11 16:43:54 EET 2026
+Wed Jan 14 18:47:17 EET 2026
 JM
 
 PLAY [Initial setup] ***********************************************************
 
 TASK [Gathering Facts] *********************************************************
-[WARNING]: Platform linux on host MJeyhun-3 is using the discovered Python
+[WARNING]: Platform linux on host MJeyhun-1 is using the discovered Python
 interpreter at /usr/bin/python3.12, but future installation of another Python
 interpreter could change the meaning of that path. See
 https://docs.ansible.com/ansible-
@@ -14,18 +14,18 @@ interpreter at /usr/bin/python3.12, but future installation of another Python
 interpreter could change the meaning of that path. See
 https://docs.ansible.com/ansible-
 core/2.18/reference_appendices/interpreter_discovery.html for more information.
-[WARNING]: Platform linux on host MJeyhun-1 is using the discovered Python
+[WARNING]: Platform linux on host MJeyhun-3 is using the discovered Python
 interpreter at /usr/bin/python3.12, but future installation of another Python
 interpreter could change the meaning of that path. See
 https://docs.ansible.com/ansible-
 core/2.18/reference_appendices/interpreter_discovery.html for more information.
-ok: [MJeyhun-3]
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
+ok: [MJeyhun-3]
 
 TASK [init : Update APT cache] *************************************************
-changed: [MJeyhun-1]
-changed: [MJeyhun-2]
+ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 changed: [MJeyhun-3]
 
 TASK [init : Install Prometheus Node Exporter] *********************************
@@ -44,7 +44,24 @@ The following NEW packages will be installed:
   libtimedate-perl moreutils nvme-cli openipmi prometheus-node-exporter
   prometheus-node-exporter-collectors python3-decorator
   python3-prometheus-client smartmontools
-0 upgraded, 18 newly installed, 0 to remove and 253 not upgraded.
+0 upgraded, 18 newly installed, 0 to remove and 259 not upgraded.
+changed: [MJeyhun-2]
+The following additional packages will be installed:
+  freeipmi-common ipmitool libfreeipmi17 libio-pty-perl libipc-run-perl
+  libopenipmi0t64 libsnmp-base libsnmp40t64 libtime-duration-perl
+  libtimedate-perl moreutils nvme-cli openipmi
+  prometheus-node-exporter-collectors python3-decorator
+  python3-prometheus-client smartmontools
+Suggested packages:
+  freeipmi-tools snmp-mibs-downloader gsmartcontrol smart-notifier mailx
+  | mailutils
+The following NEW packages will be installed:
+  freeipmi-common ipmitool libfreeipmi17 libio-pty-perl libipc-run-perl
+  libopenipmi0t64 libsnmp-base libsnmp40t64 libtime-duration-perl
+  libtimedate-perl moreutils nvme-cli openipmi prometheus-node-exporter
+  prometheus-node-exporter-collectors python3-decorator
+  python3-prometheus-client smartmontools
+0 upgraded, 18 newly installed, 0 to remove and 259 not upgraded.
 changed: [MJeyhun-1]
 The following additional packages will be installed:
   freeipmi-common ipmitool libfreeipmi17 libio-pty-perl libipc-run-perl
@@ -61,25 +78,8 @@ The following NEW packages will be installed:
   libtimedate-perl moreutils nvme-cli openipmi prometheus-node-exporter
   prometheus-node-exporter-collectors python3-decorator
   python3-prometheus-client smartmontools
-0 upgraded, 18 newly installed, 0 to remove and 253 not upgraded.
+0 upgraded, 18 newly installed, 0 to remove and 259 not upgraded.
 changed: [MJeyhun-3]
-The following additional packages will be installed:
-  freeipmi-common ipmitool libfreeipmi17 libio-pty-perl libipc-run-perl
-  libopenipmi0t64 libsnmp-base libsnmp40t64 libtime-duration-perl
-  libtimedate-perl moreutils nvme-cli openipmi
-  prometheus-node-exporter-collectors python3-decorator
-  python3-prometheus-client smartmontools
-Suggested packages:
-  freeipmi-tools snmp-mibs-downloader gsmartcontrol smart-notifier mailx
-  | mailutils
-The following NEW packages will be installed:
-  freeipmi-common ipmitool libfreeipmi17 libio-pty-perl libipc-run-perl
-  libopenipmi0t64 libsnmp-base libsnmp40t64 libtime-duration-perl
-  libtimedate-perl moreutils nvme-cli openipmi prometheus-node-exporter
-  prometheus-node-exporter-collectors python3-decorator
-  python3-prometheus-client smartmontools
-0 upgraded, 18 newly installed, 0 to remove and 253 not upgraded.
-changed: [MJeyhun-2]
 
 TASK [init : Ensure Prometheus Node Exporter is started and enabled] ***********
 ok: [MJeyhun-1]
@@ -87,9 +87,9 @@ ok: [MJeyhun-2]
 ok: [MJeyhun-3]
 
 TASK [init : Add Grafana GPG key] **********************************************
-changed: [MJeyhun-2]
 changed: [MJeyhun-3]
 changed: [MJeyhun-1]
+changed: [MJeyhun-2]
 
 TASK [init : Add grafana repo] *************************************************
 --- before: /dev/null
@@ -97,7 +97,7 @@ TASK [init : Add grafana repo] *************************************************
 @@ -0,0 +1 @@
 +deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main
 
-changed: [MJeyhun-2]
+changed: [MJeyhun-1]
 --- before: /dev/null
 +++ after: /etc/apt/sources.list.d/grafana.list
 @@ -0,0 +1 @@
@@ -109,16 +109,16 @@ changed: [MJeyhun-3]
 @@ -0,0 +1 @@
 +deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main
 
-changed: [MJeyhun-1]
+changed: [MJeyhun-2]
 
 TASK [init : Ensure the "backup" user exists and SSH key pair is generated] ****
-changed: [MJeyhun-1]
 changed: [MJeyhun-3]
 changed: [MJeyhun-2]
+changed: [MJeyhun-1]
 
 TASK [init : Add backup server SSH key to known_hosts for user backup] *********
 --- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmp42zwzc3z/known_hosts.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmp1c4g7ih9/known_hosts.j2
 @@ -0,0 +1,3 @@
 +192.168.42.5 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX
 +backup ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX
@@ -126,7 +126,7 @@ TASK [init : Add backup server SSH key to known_hosts for user backup] *********
 
 changed: [MJeyhun-3]
 --- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpa34ebh9c/known_hosts.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpk4k_ekkz/known_hosts.j2
 @@ -0,0 +1,3 @@
 +192.168.42.5 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX
 +backup ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX
@@ -134,7 +134,7 @@ changed: [MJeyhun-3]
 
 changed: [MJeyhun-1]
 --- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpy2tcffyr/known_hosts.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpxrll__2y/known_hosts.j2
 @@ -0,0 +1,3 @@
 +192.168.42.5 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX
 +backup ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAtnpnME3TsMyvcJyiYawMBod33jkDcFG9Pb1rlxDiXX
@@ -158,7 +158,7 @@ TASK [init : Ensure restore directory exists] **********************************
 +    "state": "directory"
  }
 
-changed: [MJeyhun-2]
+changed: [MJeyhun-1]
 --- before
 +++ after
 @@ -1,7 +1,7 @@
@@ -174,7 +174,7 @@ changed: [MJeyhun-2]
 +    "state": "directory"
  }
 
-changed: [MJeyhun-1]
+changed: [MJeyhun-2]
 --- before
 +++ after
 @@ -1,7 +1,7 @@
@@ -202,7 +202,7 @@ Suggested packages:
 The following NEW packages will be installed:
   duplicity librsync2t64 python3-fasteners python3-monotonic python3-nacl
   python3-paramiko
-0 upgraded, 6 newly installed, 0 to remove and 253 not upgraded.
+0 upgraded, 6 newly installed, 0 to remove and 259 not upgraded.
 changed: [MJeyhun-2]
 The following additional packages will be installed:
   librsync2t64 python3-fasteners python3-monotonic python3-nacl
@@ -213,7 +213,7 @@ Suggested packages:
 The following NEW packages will be installed:
   duplicity librsync2t64 python3-fasteners python3-monotonic python3-nacl
   python3-paramiko
-0 upgraded, 6 newly installed, 0 to remove and 253 not upgraded.
+0 upgraded, 6 newly installed, 0 to remove and 259 not upgraded.
 changed: [MJeyhun-3]
 The following additional packages will be installed:
   librsync2t64 python3-fasteners python3-monotonic python3-nacl
@@ -224,15 +224,15 @@ Suggested packages:
 The following NEW packages will be installed:
   duplicity librsync2t64 python3-fasteners python3-monotonic python3-nacl
   python3-paramiko
-0 upgraded, 6 newly installed, 0 to remove and 253 not upgraded.
+0 upgraded, 6 newly installed, 0 to remove and 259 not upgraded.
 changed: [MJeyhun-1]
 
 PLAY [DNS Servers] *************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [MJeyhun-3]
 ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-3]
 
 TASK [bind : Install bind9] ****************************************************
 The following additional packages will be installed:
@@ -243,7 +243,17 @@ The following NEW packages will be installed:
   bind9 bind9-utils dns-root-data
 The following packages will be upgraded:
   bind9-dnsutils bind9-host bind9-libs
-3 upgraded, 3 newly installed, 0 to remove and 250 not upgraded.
+3 upgraded, 3 newly installed, 0 to remove and 256 not upgraded.
+changed: [MJeyhun-3]
+The following additional packages will be installed:
+  bind9-dnsutils bind9-host bind9-libs bind9-utils dns-root-data
+Suggested packages:
+  bind-doc
+The following NEW packages will be installed:
+  bind9 bind9-utils dns-root-data
+The following packages will be upgraded:
+  bind9-dnsutils bind9-host bind9-libs
+3 upgraded, 3 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-1]
 The following additional packages will be installed:
   bind9-dnsutils bind9-host bind9-libs bind9-utils dns-root-data
@@ -253,49 +263,39 @@ The following NEW packages will be installed:
   bind9 bind9-utils dns-root-data
 The following packages will be upgraded:
   bind9-dnsutils bind9-host bind9-libs
-3 upgraded, 3 newly installed, 0 to remove and 250 not upgraded.
+3 upgraded, 3 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-2]
-The following additional packages will be installed:
-  bind9-dnsutils bind9-host bind9-libs bind9-utils dns-root-data
-Suggested packages:
-  bind-doc
-The following NEW packages will be installed:
-  bind9 bind9-utils dns-root-data
-The following packages will be upgraded:
-  bind9-dnsutils bind9-host bind9-libs
-3 upgraded, 3 newly installed, 0 to remove and 250 not upgraded.
-changed: [MJeyhun-3]
 
 TASK [bind : Install dnspython] ************************************************
 Suggested packages:
   python3-trio python3-aioquic python3-h2 python3-httpx python3-httpcore
 The following NEW packages will be installed:
   python3-dnspython
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
-changed: [MJeyhun-2]
-Suggested packages:
-  python3-trio python3-aioquic python3-h2 python3-httpx python3-httpcore
-The following NEW packages will be installed:
-  python3-dnspython
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-1]
 Suggested packages:
   python3-trio python3-aioquic python3-h2 python3-httpx python3-httpcore
 The following NEW packages will be installed:
   python3-dnspython
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-3]
+Suggested packages:
+  python3-trio python3-aioquic python3-h2 python3-httpx python3-httpcore
+The following NEW packages will be installed:
+  python3-dnspython
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
+changed: [MJeyhun-2]
 
 TASK [bind : template] *********************************************************
-changed: [MJeyhun-1] => (item=None)
-changed: [MJeyhun-3] => (item=None)
 changed: [MJeyhun-2] => (item=None)
+changed: [MJeyhun-3] => (item=None)
 changed: [MJeyhun-1] => (item=None)
-changed: [MJeyhun-1]
 changed: [MJeyhun-3] => (item=None)
 changed: [MJeyhun-3]
 changed: [MJeyhun-2] => (item=None)
 changed: [MJeyhun-2]
+changed: [MJeyhun-1] => (item=None)
+changed: [MJeyhun-1]
 
 TASK [bind : template] *********************************************************
 skipping: [MJeyhun-2]
@@ -314,35 +314,35 @@ TASK [bind : Flush] ************************************************************
 TASK [bind : Flush] ************************************************************
 
 RUNNING HANDLER [bind : restart bind] ******************************************
-changed: [MJeyhun-1]
-changed: [MJeyhun-2]
 changed: [MJeyhun-3]
+changed: [MJeyhun-2]
+changed: [MJeyhun-1]
 
 RUNNING HANDLER [bind : reload rndc] *******************************************
 changed: [MJeyhun-3]
 
 TASK [bind : Enable bind9] *****************************************************
 ok: [MJeyhun-3]
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [bind : Install Bind9 exporter] *******************************************
 The following NEW packages will be installed:
   prometheus-bind-exporter
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
-changed: [MJeyhun-1]
-The following NEW packages will be installed:
-  prometheus-bind-exporter
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-2]
 The following NEW packages will be installed:
   prometheus-bind-exporter
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-3]
+The following NEW packages will be installed:
+  prometheus-bind-exporter
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
+changed: [MJeyhun-1]
 
 TASK [bind : Ensure Bind exporter is running and enabled] **********************
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 ok: [MJeyhun-3]
 
 TASK [bind : Add A records] ****************************************************
@@ -376,9 +376,9 @@ changed: [MJeyhun-3]
 PLAY [Resolve] *****************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-3]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [resolver : Check if /etc/resolver.conf exists] ***************************
 ok: [MJeyhun-1]
@@ -395,7 +395,7 @@ TASK [resolver : Unlink /etc/resolv.conf if it exists and is a symlink] ********
 +    "state": "absent"
  }
 
-changed: [MJeyhun-1]
+changed: [MJeyhun-2]
 --- before
 +++ after
 @@ -1,4 +1,4 @@
@@ -405,7 +405,7 @@ changed: [MJeyhun-1]
 +    "state": "absent"
  }
 
-changed: [MJeyhun-2]
+changed: [MJeyhun-1]
 --- before
 +++ after
 @@ -1,4 +1,4 @@
@@ -419,35 +419,35 @@ changed: [MJeyhun-3]
 
 TASK [resolver : Apply /etc/resolv.conf template] ******************************
 --- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmp0mbz8rzi/resolv.conf.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmp2ns1o0ig/resolv.conf.j2
 @@ -0,0 +1,3 @@
 +search batice.ttu
-+nameserver 192.168.42.232
-+nameserver 192.168.42.139
++nameserver 192.168.43.245
++nameserver 192.168.43.83
 
-changed: [MJeyhun-2]
+changed: [MJeyhun-3]
 --- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpzykg21hz/resolv.conf.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpsbxe6d7o/resolv.conf.j2
 @@ -0,0 +1,3 @@
 +search batice.ttu
-+nameserver 192.168.42.232
-+nameserver 192.168.42.139
++nameserver 192.168.43.245
++nameserver 192.168.43.83
 
 changed: [MJeyhun-1]
 --- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpjxnz9a1z/resolv.conf.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpev3s4d9z/resolv.conf.j2
 @@ -0,0 +1,3 @@
 +search batice.ttu
-+nameserver 192.168.42.232
-+nameserver 192.168.42.139
++nameserver 192.168.43.245
++nameserver 192.168.43.83
 
-changed: [MJeyhun-3]
+changed: [MJeyhun-2]
 
 PLAY [Web Servers] *************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [docker : Install Docker and prerequisites] *******************************
 The following additional packages will be installed:
@@ -458,7 +458,7 @@ Suggested packages:
 The following NEW packages will be installed:
   bridge-utils containerd dnsmasq-base docker.io pigz python3-docker
   python3-websocket runc ubuntu-fan
-0 upgraded, 9 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 9 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-1]
 The following additional packages will be installed:
   bridge-utils containerd dnsmasq-base pigz python3-websocket runc ubuntu-fan
@@ -468,7 +468,7 @@ Suggested packages:
 The following NEW packages will be installed:
   bridge-utils containerd dnsmasq-base docker.io pigz python3-docker
   python3-websocket runc ubuntu-fan
-0 upgraded, 9 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 9 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-2]
 
 TASK [docker : Ensure Docker service is running] *******************************
@@ -508,16 +508,16 @@ changed: [MJeyhun-1] => (item={'url': 'https://raw.githubusercontent.com/hudolej
 changed: [MJeyhun-2] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/main/Dockerfile', 'dest': 'Dockerfile'})
 
 TASK [agama : Build Agama Docker image] ****************************************
-changed: [MJeyhun-2]
 changed: [MJeyhun-1]
+changed: [MJeyhun-2]
 
 TASK [agama : Start Agama Docker container] ************************************
-changed: [MJeyhun-1] => (item=None)
 changed: [MJeyhun-2] => (item=None)
 changed: [MJeyhun-1] => (item=None)
-changed: [MJeyhun-1]
 changed: [MJeyhun-2] => (item=None)
 changed: [MJeyhun-2]
+changed: [MJeyhun-1] => (item=None)
+changed: [MJeyhun-1]
 
 TASK [agama : Add CNAME records for Web Servers] *******************************
 changed: [MJeyhun-1 -> MJeyhun-3(193.40.157.25)] => (item=None)
@@ -531,20 +531,132 @@ Suggested packages:
   fcgiwrap nginx-doc ssl-cert
 The following NEW packages will be installed:
   nginx nginx-common
-0 upgraded, 2 newly installed, 0 to remove and 250 not upgraded.
-changed: [MJeyhun-1]
+0 upgraded, 2 newly installed, 0 to remove and 256 not upgraded.
+changed: [MJeyhun-2]
 The following additional packages will be installed:
   nginx-common
 Suggested packages:
   fcgiwrap nginx-doc ssl-cert
 The following NEW packages will be installed:
   nginx nginx-common
-0 upgraded, 2 newly installed, 0 to remove and 250 not upgraded.
-changed: [MJeyhun-2]
+0 upgraded, 2 newly installed, 0 to remove and 256 not upgraded.
+changed: [MJeyhun-1]
 
 TASK [nginx : Apply Nginx configuration using template] ************************
 --- before: /etc/nginx/sites-enabled/default
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmp_5zjrgk_/default.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpmhw5b_nd/default.j2
+@@ -1,91 +1,21 @@
+-##
+-# You should look at the following URL's in order to grasp a solid understanding
+-# of Nginx configuration files in order to fully unleash the power of Nginx.
+-# https://www.nginx.com/resources/wiki/start/
+-# https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/
+-# https://wiki.debian.org/Nginx/DirectoryStructure
+-#
+-# In most cases, administrators will remove this file from sites-enabled/ and
+-# leave it as reference inside of sites-available where it will continue to be
+-# updated by the nginx packaging team.
+-#
+-# This file will automatically load configuration files provided by other
+-# applications, such as Drupal or Wordpress. These applications will be made
+-# available underneath a path with that package name, such as /drupal8.
+-#
+-# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+-##
++log_format agama_format '$status $request_time';
+ 
+-# Default server configuration
+-#
+ server {
+-	listen 80 default_server;
+-	listen [::]:80 default_server;
++    listen 80 default_server;
++    server_name _;
++                location / {
+ 
+-	# SSL configuration
+-	#
+-	# listen 443 ssl default_server;
+-	# listen [::]:443 ssl default_server;
+-	#
+-	# Note: You should disable gzip for SSL traffic.
+-	# See: https://bugs.debian.org/773332
+-	#
+-	# Read up on ssl_ciphers to ensure a secure configuration.
+-	# See: https://bugs.debian.org/765782
+-	#
+-	# Self signed certs generated by the ssl-cert package
+-	# Don't use them in a production server!
+-	#
+-	# include snippets/snakeoil.conf;
+-
+-	root /var/www/html;
+-
+-	# Add index.php to the list if you are using PHP
+-	index index.html index.htm index.nginx-debian.html;
+-
+-	server_name _;
+-
+-	location / {
+-		# First attempt to serve request as file, then
+-		# as directory, then fall back to displaying a 404.
+-		try_files $uri $uri/ =404;
+-	}
+-
+-	# pass PHP scripts to FastCGI server
+-	#
+-	#location ~ \.php$ {
+-	#	include snippets/fastcgi-php.conf;
+-	#
+-	#	# With php-fpm (or other unix sockets):
+-	#	fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+-	#	# With php-cgi (or other tcp sockets):
+-	#	fastcgi_pass 127.0.0.1:9000;
+-	#}
+-
+-	# deny access to .htaccess files, if Apache's document root
+-	# concurs with nginx's one
+-	#
+-	#location ~ /\.ht {
+-	#	deny all;
+-	#}
++		proxy_pass http://localhost:8001;
++		access_log /var/log/nginx/access.log;
++		access_log /var/log/nginx/agama.log agama_format;
++        }
++	        	
++	
+ }
+ 
+-
+-# Virtual Host configuration for example.com
+-#
+-# You can move that to a different file under sites-available/ and symlink that
+-# to sites-enabled/ to enable it.
+-#
+-#server {
+-#	listen 80;
+-#	listen [::]:80;
+-#
+-#	server_name example.com;
+-#
+-#	root /var/www/example.com;
+-#	index index.html;
+-#
+-#	location / {
+-#		try_files $uri $uri/ =404;
+-#	}
+-#}
++server {
++	listen 8080 default_server;
++	location /stub_status {
++		stub_status;
++	}
++}
+
+changed: [MJeyhun-2]
+--- before: /etc/nginx/sites-enabled/default
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpueh_ptbz/default.j2
 @@ -1,91 +1,21 @@
 -##
 -# You should look at the following URL's in order to grasp a solid understanding
@@ -655,118 +767,6 @@ TASK [nginx : Apply Nginx configuration using template] ************************
 +}
 
 changed: [MJeyhun-1]
---- before: /etc/nginx/sites-enabled/default
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpay7go8rx/default.j2
-@@ -1,91 +1,21 @@
--##
--# You should look at the following URL's in order to grasp a solid understanding
--# of Nginx configuration files in order to fully unleash the power of Nginx.
--# https://www.nginx.com/resources/wiki/start/
--# https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/
--# https://wiki.debian.org/Nginx/DirectoryStructure
--#
--# In most cases, administrators will remove this file from sites-enabled/ and
--# leave it as reference inside of sites-available where it will continue to be
--# updated by the nginx packaging team.
--#
--# This file will automatically load configuration files provided by other
--# applications, such as Drupal or Wordpress. These applications will be made
--# available underneath a path with that package name, such as /drupal8.
--#
--# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
--##
-+log_format agama_format '$status $request_time';
- 
--# Default server configuration
--#
- server {
--	listen 80 default_server;
--	listen [::]:80 default_server;
-+    listen 80 default_server;
-+    server_name _;
-+                location / {
- 
--	# SSL configuration
--	#
--	# listen 443 ssl default_server;
--	# listen [::]:443 ssl default_server;
--	#
--	# Note: You should disable gzip for SSL traffic.
--	# See: https://bugs.debian.org/773332
--	#
--	# Read up on ssl_ciphers to ensure a secure configuration.
--	# See: https://bugs.debian.org/765782
--	#
--	# Self signed certs generated by the ssl-cert package
--	# Don't use them in a production server!
--	#
--	# include snippets/snakeoil.conf;
--
--	root /var/www/html;
--
--	# Add index.php to the list if you are using PHP
--	index index.html index.htm index.nginx-debian.html;
--
--	server_name _;
--
--	location / {
--		# First attempt to serve request as file, then
--		# as directory, then fall back to displaying a 404.
--		try_files $uri $uri/ =404;
--	}
--
--	# pass PHP scripts to FastCGI server
--	#
--	#location ~ \.php$ {
--	#	include snippets/fastcgi-php.conf;
--	#
--	#	# With php-fpm (or other unix sockets):
--	#	fastcgi_pass unix:/run/php/php7.4-fpm.sock;
--	#	# With php-cgi (or other tcp sockets):
--	#	fastcgi_pass 127.0.0.1:9000;
--	#}
--
--	# deny access to .htaccess files, if Apache's document root
--	# concurs with nginx's one
--	#
--	#location ~ /\.ht {
--	#	deny all;
--	#}
-+		proxy_pass http://localhost:8001;
-+		access_log /var/log/nginx/access.log;
-+		access_log /var/log/nginx/agama.log agama_format;
-+        }
-+	        	
-+	
- }
- 
--
--# Virtual Host configuration for example.com
--#
--# You can move that to a different file under sites-available/ and symlink that
--# to sites-enabled/ to enable it.
--#
--#server {
--#	listen 80;
--#	listen [::]:80;
--#
--#	server_name example.com;
--#
--#	root /var/www/example.com;
--#	index index.html;
--#
--#	location / {
--#		try_files $uri $uri/ =404;
--#	}
--#}
-+server {
-+	listen 8080 default_server;
-+	location /stub_status {
-+		stub_status;
-+	}
-+}
-
-changed: [MJeyhun-2]
 
 TASK [nginx : Flush handlers] **************************************************
 
@@ -786,16 +786,16 @@ ok: [MJeyhun-2]
 TASK [nginx : Install Nginx exporter] ******************************************
 The following NEW packages will be installed:
   prometheus-nginx-exporter
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-1]
 The following NEW packages will be installed:
   prometheus-nginx-exporter
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-2]
 
 TASK [nginx : Ensure nginx exporter started] ***********************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 PLAY [Database server] *********************************************************
 
@@ -824,7 +824,7 @@ The following NEW packages will be installed:
   mecab-ipadic mecab-ipadic-utf8 mecab-utils mysql-client-8.0
   mysql-client-core-8.0 mysql-common mysql-server mysql-server-8.0
   mysql-server-core-8.0
-0 upgraded, 27 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 27 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-2]
 The following additional packages will be installed:
   libcgi-fast-perl libcgi-pm-perl libclone-perl libencode-locale-perl
@@ -846,16 +846,16 @@ The following NEW packages will be installed:
   mecab-ipadic mecab-ipadic-utf8 mecab-utils mysql-client-8.0
   mysql-client-core-8.0 mysql-common mysql-server mysql-server-8.0
   mysql-server-core-8.0
-0 upgraded, 27 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 27 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-1]
 
 TASK [mysql : Ensure MySQL service is started and enabled] *********************
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 
 TASK [mysql : MySQL override.cnf] **********************************************
 --- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpejqusbl8/override.cnf.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpxhbctdbf/override.cnf.j2
 @@ -0,0 +1,7 @@
 +[mysqld]
 +bind-address = 0.0.0.0
@@ -863,11 +863,11 @@ TASK [mysql : MySQL override.cnf] **********************************************
 +log-bin = /var/log/mysql/mysql-bin.log
 +relay-log = /var/log/mysql/mysql-relay.log
 +replicate-do-db = agama
-+server-id = 139
++server-id = 339
 
 changed: [MJeyhun-1]
 --- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpjk6how8v/override.cnf.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmp5lbekupg/override.cnf.j2
 @@ -0,0 +1,7 @@
 +[mysqld]
 +bind-address = 0.0.0.0
@@ -875,7 +875,7 @@ changed: [MJeyhun-1]
 +log-bin = /var/log/mysql/mysql-bin.log
 +relay-log = /var/log/mysql/mysql-relay.log
 +replicate-do-db = agama
-+server-id = 232
++server-id = 501
 
 changed: [MJeyhun-2]
 
@@ -884,36 +884,36 @@ Suggested packages:
   python-pymysql-doc
 The following NEW packages will be installed:
   python3-pymysql
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
-changed: [MJeyhun-2]
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
+changed: [MJeyhun-1]
 Suggested packages:
   python-pymysql-doc
 The following NEW packages will be installed:
   python3-pymysql
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
-changed: [MJeyhun-1]
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
+changed: [MJeyhun-2]
 
 TASK [mysql : MySQL database] **************************************************
 changed: [MJeyhun-1]
 changed: [MJeyhun-2]
 
 TASK [mysql : MySQL User] ******************************************************
-changed: [MJeyhun-2]
 changed: [MJeyhun-1]
+changed: [MJeyhun-2]
 
 TASK [mysql : Install MySQL exporter] ******************************************
 The following NEW packages will be installed:
   prometheus-mysqld-exporter
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
-changed: [MJeyhun-2]
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
+changed: [MJeyhun-1]
 The following NEW packages will be installed:
   prometheus-mysqld-exporter
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
-changed: [MJeyhun-1]
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
+changed: [MJeyhun-2]
 
 TASK [mysql : Cnf files for exporter] ******************************************
-changed: [MJeyhun-1]
 changed: [MJeyhun-2]
+changed: [MJeyhun-1]
 
 TASK [mysql : Create MySQL user for the exporter] ******************************
 changed: [MJeyhun-1]
@@ -932,7 +932,7 @@ TASK [mysql : Configure mysqld_exporter systemd service to use .my.cnf] ********
  ### Database authentication
  #
 
-changed: [MJeyhun-1]
+changed: [MJeyhun-2]
 --- before: /etc/default/prometheus-mysqld-exporter (content)
 +++ after: /etc/default/prometheus-mysqld-exporter (content)
 @@ -2,7 +2,7 @@
@@ -945,7 +945,7 @@ changed: [MJeyhun-1]
  ### Database authentication
  #
 
-changed: [MJeyhun-2]
+changed: [MJeyhun-1]
 
 TASK [mysql : Ensure Prometheus MySQL Exporter is started and enabled] *********
 changed: [MJeyhun-1]
@@ -995,18 +995,18 @@ changed: [MJeyhun-2]
 
 TASK [mysql : Ensure /etc/cron.d/mysql-backup is created] **********************
 --- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmp2yz9ix93/backup-cron.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmp5de_m4z4/backup-cron.j2
+@@ -0,0 +1 @@
++
+
+changed: [MJeyhun-1]
+--- before
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpaflniwrq/backup-cron.j2
 @@ -0,0 +1,2 @@
 +15 00 * * *  backup  mysqldump agama > /home/backup/mysql/agama.sql
 +16 00 * * *  backup  duplicity --no-encryption full /home/backup/mysql/ rsync://MJeyhun@backup.batice.ttu/mysql
 
 changed: [MJeyhun-2]
---- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpck2tafgo/backup-cron.j2
-@@ -0,0 +1 @@
-+
-
-changed: [MJeyhun-1]
 
 TASK [mysql : start cron] ******************************************************
 ok: [MJeyhun-1]
@@ -1017,8 +1017,8 @@ changed: [MJeyhun-1]
 changed: [MJeyhun-2]
 
 TASK [mysql : Set MySQL read_only mode dynamically] ****************************
-changed: [MJeyhun-2]
 changed: [MJeyhun-1]
+changed: [MJeyhun-2]
 
 TASK [mysql : Add CNAME records for mysql] *************************************
 changed: [MJeyhun-1 -> MJeyhun-3(193.40.157.25)] => (item=None)
@@ -1034,8 +1034,8 @@ changed: [MJeyhun-2]
 changed: [MJeyhun-1]
 
 RUNNING HANDLER [mysql : restart cron] *****************************************
-changed: [MJeyhun-2]
 changed: [MJeyhun-1]
+changed: [MJeyhun-2]
 
 RUNNING HANDLER [mysql : Reset MySQL source] ***********************************
 skipping: [MJeyhun-2] => (item=stopreplica) 
@@ -1077,7 +1077,7 @@ The following NEW packages will be installed:
   libjs-jquery libjs-jquery-hotkeys libjs-moment libjs-moment-timezone
   libjs-mustache libjs-popper.js libjs-rickshaw libjs-sizzle node-jquery
   prometheus
-0 upgraded, 16 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 16 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-3]
 
 TASK [prometheus : Ensure Prometheus service is enabled and started] ***********
@@ -1091,7 +1091,7 @@ changed: [MJeyhun-3]
 
 TASK [prometheus : Install Prometheus backup cron] *****************************
 --- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmp2j91vsfq/backup-cron.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpyutgr3ke/backup-cron.j2
 @@ -0,0 +1,3 @@
 +10 22 * * * backup curl -XPOST http://localhost:9090/prometheus/api/v1/admin/tsdb/snapshot
 +20 22 * * *  backup  duplicity --no-encryption full /var/lib/prometheus/metrics2/snapshots/ rsync://MJeyhun@backup.batice.ttu/prometheus
@@ -1113,12 +1113,12 @@ Suggested packages:
   fcgiwrap nginx-doc ssl-cert
 The following NEW packages will be installed:
   nginx nginx-common
-0 upgraded, 2 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 2 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-3]
 
 TASK [nginx : Apply Nginx configuration using template] ************************
 --- before: /etc/nginx/sites-enabled/default
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpwzyxiyyv/default.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpv9xukb5m/default.j2
 @@ -1,91 +1,25 @@
 -##
 -# You should look at the following URL's in order to grasp a solid understanding
@@ -1254,7 +1254,7 @@ ok: [MJeyhun-3]
 TASK [nginx : Install Nginx exporter] ******************************************
 The following NEW packages will be installed:
   prometheus-nginx-exporter
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-3]
 
 TASK [nginx : Ensure nginx exporter started] ***********************************
@@ -1274,7 +1274,7 @@ Suggested packages:
 The following NEW packages will be installed:
   bridge-utils containerd dnsmasq-base docker.io pigz python3-docker
   python3-websocket runc ubuntu-fan
-0 upgraded, 9 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 9 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-3]
 
 TASK [docker : Ensure Docker service is running] *******************************
@@ -1343,7 +1343,7 @@ changed: [MJeyhun-3]
 
 TASK [grafana : Create Grafana dashboard file] *********************************
 --- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpk55gyrbs/dashboards.yaml.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpomr8lu5z/dashboards.yaml.j2
 @@ -0,0 +1,16 @@
 +# # config file version
 +apiVersion: 1
@@ -1366,7 +1366,7 @@ changed: [MJeyhun-3]
 
 TASK [grafana : Create Grafana datasource provisioning file] *******************
 --- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmp98uuany7/datasources.yaml.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpyox05g54/datasources.yaml.j2
 @@ -0,0 +1,21 @@
 +apiVersion: 1
 +datasources:
@@ -3687,7 +3687,7 @@ ok: [MJeyhun-3]
 TASK [loki : Install Loki] *****************************************************
 The following NEW packages will be installed:
   loki
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-3]
 
 TASK [loki : Create Loki data directory] ***************************************
@@ -3706,7 +3706,7 @@ changed: [MJeyhun-3]
 
 TASK [loki : Configure Loki] ***************************************************
 --- before: /etc/loki/config.yml
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpum7as70h/config.yml.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpnw29vhgl/config.yml.j2
 @@ -7,7 +7,7 @@
    grpc_server_max_concurrent_streams: 1000
  
@@ -3773,7 +3773,7 @@ changed: [MJeyhun-3]
 
 TASK [loki : Install Loki backup cron] *****************************************
 --- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmp1jjiqa4j/backup-cron.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpo7e3z5wy/backup-cron.j2
 @@ -0,0 +1,4 @@
 +36 23 * * * backup cp -r /tmp/loki/tsdb-shipper-active /home/backup/loki/ && cp -r /tmp/loki/wal /home/backup/loki/ && chown -R backup:backup /home/backup/loki
 +46 23 * * * backup duplicity --no-encryption full /home/backup/loki/ rsync://MJeyhun@backup.batice.ttu/loki
@@ -3802,22 +3802,22 @@ PLAY [Promtail server] *********************************************************
 
 TASK [Gathering Facts] *********************************************************
 ok: [MJeyhun-3]
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [promtail : Install Promtail] *********************************************
 The following NEW packages will be installed:
   promtail
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
-changed: [MJeyhun-1]
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
+changed: [MJeyhun-3]
 The following NEW packages will be installed:
   promtail
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-2]
 The following NEW packages will be installed:
   promtail
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
-changed: [MJeyhun-3]
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
+changed: [MJeyhun-1]
 
 TASK [promtail : Add promtail user to adm group] *******************************
 changed: [MJeyhun-2]
@@ -3825,9 +3825,9 @@ changed: [MJeyhun-1]
 changed: [MJeyhun-3]
 
 TASK [promtail : Check if agama log exists] ************************************
+ok: [MJeyhun-3]
 ok: [MJeyhun-1]
 ok: [MJeyhun-2]
-ok: [MJeyhun-3]
 
 TASK [promtail : Allow adm group to read agama log] ****************************
 skipping: [MJeyhun-1]
@@ -3874,87 +3874,7 @@ changed: [MJeyhun-3]
 
 TASK [promtail : Configure Promtail] *******************************************
 --- before: /etc/promtail/config.yml
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpva_b2529/config.yml.j2
-@@ -1,24 +1,60 @@
--# This minimal config scrape only single log file.
--# Primarily used in rpm/deb packaging where promtail service can be started during system init process.
--# And too much scraping during init process can overload the complete system.
--# https://github.com/grafana/loki/issues/11398
--
- server:
-   http_listen_port: 9080
-   grpc_listen_port: 0
- 
- positions:
--  filename: /tmp/positions.yaml
-+  filename: /var/lib/promtail/positions.yaml
- 
- clients:
--- url: http://localhost:3100/loki/api/v1/push
-+  - url: "http://loki:3100/loki/api/v1/push"
- 
- scrape_configs:
--- job_name: system
--  static_configs:
--  - targets:
--      - localhost
--    labels:
--      job: varlogs
--      #NOTE: Need to be modified to scrape any additional logs of the system.
--      __path__: /var/log/messages
-+  - job_name: system
-+    static_configs:
-+      - targets:
-+          - localhost
-+        labels:
-+          host: MJeyhun-1
-+          __path__: /var/log/syslog
-+
-+
-+#  - job_name: agama
-+#    static_configs:
-+#      - targets: [localhost]
-+#        labels:
-+#          job: agama
-+#          hostname: "MJeyhun-1"
-+#          __path__: /var/log/uwsgi/app/agama.log
-+
-+  - job_name: nginx_access
-+    static_configs:
-+      - targets: [localhost]
-+        labels:
-+          job: nginx
-+          hostname: "MJeyhun-1"
-+          __path__: /var/log/nginx/access.log
-+
-+  - job_name: nginx_error
-+    static_configs:
-+      - targets: [localhost]
-+        labels:
-+          job: nginx
-+          hostname: "MJeyhun-1"
-+          __path__: /var/log/nginx/error.log
-+
-+  - job_name: agama_sli
-+    static_configs:
-+      - targets: [localhost]
-+        labels:
-+          job: agama
-+          hostname: "MJeyhun-1"
-+          __path__: /var/log/nginx/agama.log
-+ 
-+  - job_name: syslog
-+    syslog:
-+      listen_address: 0.0.0.0:8814
-+      label_structured_data: true
-+      labels:
-+        job: haproxy
-+        service: haproxy
-+        host: MJeyhun-1 
-
-changed: [MJeyhun-1]
---- before: /etc/promtail/config.yml
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpkh6_ztwn/config.yml.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmp64ud8fn4/config.yml.j2
 @@ -1,24 +1,60 @@
 -# This minimal config scrape only single log file.
 -# Primarily used in rpm/deb packaging where promtail service can be started during system init process.
@@ -4034,7 +3954,7 @@ changed: [MJeyhun-1]
 
 changed: [MJeyhun-2]
 --- before: /etc/promtail/config.yml
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmphkx8kxg7/config.yml.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmp3sjpfb6w/config.yml.j2
 @@ -1,24 +1,60 @@
 -# This minimal config scrape only single log file.
 -# Primarily used in rpm/deb packaging where promtail service can be started during system init process.
@@ -4113,16 +4033,96 @@ changed: [MJeyhun-2]
 +        host: MJeyhun-3 
 
 changed: [MJeyhun-3]
+--- before: /etc/promtail/config.yml
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpm9xy0ir0/config.yml.j2
+@@ -1,24 +1,60 @@
+-# This minimal config scrape only single log file.
+-# Primarily used in rpm/deb packaging where promtail service can be started during system init process.
+-# And too much scraping during init process can overload the complete system.
+-# https://github.com/grafana/loki/issues/11398
+-
+ server:
+   http_listen_port: 9080
+   grpc_listen_port: 0
+ 
+ positions:
+-  filename: /tmp/positions.yaml
++  filename: /var/lib/promtail/positions.yaml
+ 
+ clients:
+-- url: http://localhost:3100/loki/api/v1/push
++  - url: "http://loki:3100/loki/api/v1/push"
+ 
+ scrape_configs:
+-- job_name: system
+-  static_configs:
+-  - targets:
+-      - localhost
+-    labels:
+-      job: varlogs
+-      #NOTE: Need to be modified to scrape any additional logs of the system.
+-      __path__: /var/log/messages
++  - job_name: system
++    static_configs:
++      - targets:
++          - localhost
++        labels:
++          host: MJeyhun-1
++          __path__: /var/log/syslog
++
++
++#  - job_name: agama
++#    static_configs:
++#      - targets: [localhost]
++#        labels:
++#          job: agama
++#          hostname: "MJeyhun-1"
++#          __path__: /var/log/uwsgi/app/agama.log
++
++  - job_name: nginx_access
++    static_configs:
++      - targets: [localhost]
++        labels:
++          job: nginx
++          hostname: "MJeyhun-1"
++          __path__: /var/log/nginx/access.log
++
++  - job_name: nginx_error
++    static_configs:
++      - targets: [localhost]
++        labels:
++          job: nginx
++          hostname: "MJeyhun-1"
++          __path__: /var/log/nginx/error.log
++
++  - job_name: agama_sli
++    static_configs:
++      - targets: [localhost]
++        labels:
++          job: agama
++          hostname: "MJeyhun-1"
++          __path__: /var/log/nginx/agama.log
++ 
++  - job_name: syslog
++    syslog:
++      listen_address: 0.0.0.0:8814
++      label_structured_data: true
++      labels:
++        job: haproxy
++        service: haproxy
++        host: MJeyhun-1 
+
+changed: [MJeyhun-1]
 
 TASK [promtail : Enable and start Promtail] ************************************
 ok: [MJeyhun-1]
-ok: [MJeyhun-2]
 ok: [MJeyhun-3]
+ok: [MJeyhun-2]
 
 RUNNING HANDLER [promtail : restart promtail] **********************************
+changed: [MJeyhun-1]
 changed: [MJeyhun-2]
 changed: [MJeyhun-3]
-changed: [MJeyhun-1]
 
 PLAY [Haproxy] *****************************************************************
 
@@ -4137,7 +4137,7 @@ Suggested packages:
   vim-haproxy haproxy-doc
 The following NEW packages will be installed:
   haproxy liblua5.4-0
-0 upgraded, 2 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 2 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-1]
 The following additional packages will be installed:
   liblua5.4-0
@@ -4145,12 +4145,98 @@ Suggested packages:
   vim-haproxy haproxy-doc
 The following NEW packages will be installed:
   haproxy liblua5.4-0
-0 upgraded, 2 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 2 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-2]
 
 TASK [haproxy : Config file for HAProxy] ***************************************
 --- before: /etc/haproxy/haproxy.cfg
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpxhbgp8i5/haproxy.cfg.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpo_sly93m/haproxy.cfg.j2
+@@ -1,34 +1,59 @@
+ global
+-	log /dev/log	local0
+-	log /dev/log	local1 notice
++        log ring@logbuffer local0 info
+ 	chroot /var/lib/haproxy
+-	stats socket /run/haproxy/admin.sock mode 660 level admin
+-	stats timeout 30s
+-	user haproxy
+-	group haproxy
+-	daemon
++        stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
++        stats timeout 30s
++        user haproxy
++        group haproxy
++        daemon
+ 
+-	# Default SSL material locations
+-	ca-base /etc/ssl/certs
+-	crt-base /etc/ssl/private
++        # Default SSL material locations
++        ca-base /etc/ssl/certs
++        crt-base /etc/ssl/private
+ 
+-	# See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
++        # See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
+         ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+         ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
+         ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
+ 
+ defaults
+-	log	global
+-	mode	http
+-	option	httplog
+-	option	dontlognull
++        log     global
++        mode    http
++        option  httplog
++        option  dontlognull
+         timeout connect 5000
+         timeout client  50000
+         timeout server  50000
+-	errorfile 400 /etc/haproxy/errors/400.http
+-	errorfile 403 /etc/haproxy/errors/403.http
+-	errorfile 408 /etc/haproxy/errors/408.http
+-	errorfile 500 /etc/haproxy/errors/500.http
+-	errorfile 502 /etc/haproxy/errors/502.http
+-	errorfile 503 /etc/haproxy/errors/503.http
+-	errorfile 504 /etc/haproxy/errors/504.http
++        errorfile 400 /etc/haproxy/errors/400.http
++        errorfile 403 /etc/haproxy/errors/403.http
++        errorfile 408 /etc/haproxy/errors/408.http
++        errorfile 500 /etc/haproxy/errors/500.http
++        errorfile 502 /etc/haproxy/errors/502.http
++        errorfile 503 /etc/haproxy/errors/503.http
++        errorfile 504 /etc/haproxy/errors/504.http
++
++ring logbuffer
++    description "HAProxy -> Promtail syslog over TCP"
++    format rfc5424
++    maxlen 1500
++    size 65536
++    timeout connect 10s
++    timeout server 20s
++    server promtail localhost:8814
++
++frontend my_ha_frontend
++    bind :88
++    log-format "%ST %Tr"
++    default_backend my_ha_backend
++
++backend my_ha_backend
++    server docker1 www-1:8001 check
++    server docker2 www-1:8002 check
++    server docker3 www-2:8001 check
++    server docker4 www-2:8002 check
++
++listen stats
++    bind :8404
++    stats enable
++    stats uri /stats
++
+
+changed: [MJeyhun-2]
+--- before: /etc/haproxy/haproxy.cfg
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpqczivq2n/haproxy.cfg.j2
 @@ -1,34 +1,59 @@
  global
 -	log /dev/log	local0
@@ -4235,92 +4321,6 @@ TASK [haproxy : Config file for HAProxy] ***************************************
 +
 
 changed: [MJeyhun-1]
---- before: /etc/haproxy/haproxy.cfg
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmphn441f3l/haproxy.cfg.j2
-@@ -1,34 +1,59 @@
- global
--	log /dev/log	local0
--	log /dev/log	local1 notice
-+        log ring@logbuffer local0 info
- 	chroot /var/lib/haproxy
--	stats socket /run/haproxy/admin.sock mode 660 level admin
--	stats timeout 30s
--	user haproxy
--	group haproxy
--	daemon
-+        stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
-+        stats timeout 30s
-+        user haproxy
-+        group haproxy
-+        daemon
- 
--	# Default SSL material locations
--	ca-base /etc/ssl/certs
--	crt-base /etc/ssl/private
-+        # Default SSL material locations
-+        ca-base /etc/ssl/certs
-+        crt-base /etc/ssl/private
- 
--	# See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
-+        # See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
-         ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
-         ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
-         ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
- 
- defaults
--	log	global
--	mode	http
--	option	httplog
--	option	dontlognull
-+        log     global
-+        mode    http
-+        option  httplog
-+        option  dontlognull
-         timeout connect 5000
-         timeout client  50000
-         timeout server  50000
--	errorfile 400 /etc/haproxy/errors/400.http
--	errorfile 403 /etc/haproxy/errors/403.http
--	errorfile 408 /etc/haproxy/errors/408.http
--	errorfile 500 /etc/haproxy/errors/500.http
--	errorfile 502 /etc/haproxy/errors/502.http
--	errorfile 503 /etc/haproxy/errors/503.http
--	errorfile 504 /etc/haproxy/errors/504.http
-+        errorfile 400 /etc/haproxy/errors/400.http
-+        errorfile 403 /etc/haproxy/errors/403.http
-+        errorfile 408 /etc/haproxy/errors/408.http
-+        errorfile 500 /etc/haproxy/errors/500.http
-+        errorfile 502 /etc/haproxy/errors/502.http
-+        errorfile 503 /etc/haproxy/errors/503.http
-+        errorfile 504 /etc/haproxy/errors/504.http
-+
-+ring logbuffer
-+    description "HAProxy -> Promtail syslog over TCP"
-+    format rfc5424
-+    maxlen 1500
-+    size 65536
-+    timeout connect 10s
-+    timeout server 20s
-+    server promtail localhost:8814
-+
-+frontend my_ha_frontend
-+    bind :88
-+    log-format "%ST %Tr"
-+    default_backend my_ha_backend
-+
-+backend my_ha_backend
-+    server docker1 www-1:8001 check
-+    server docker2 www-1:8002 check
-+    server docker3 www-2:8001 check
-+    server docker4 www-2:8002 check
-+
-+listen stats
-+    bind :8404
-+    stats enable
-+    stats uri /stats
-+
-
-changed: [MJeyhun-2]
 
 TASK [haproxy : Haproxy started] ***********************************************
 ok: [MJeyhun-1]
@@ -4329,16 +4329,16 @@ ok: [MJeyhun-2]
 TASK [haproxy : Install prometheus haproxy exporter] ***************************
 The following NEW packages will be installed:
   prometheus-haproxy-exporter
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-1]
 The following NEW packages will be installed:
   prometheus-haproxy-exporter
-0 upgraded, 1 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 1 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-2]
 
 TASK [haproxy : Config file for exporter] **************************************
 --- before: /etc/default/prometheus-haproxy-exporter
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpop8ptfm3/prometheus-haproxy-exporter.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpuu6pn0dk/prometheus-haproxy-exporter.j2
 @@ -1,5 +1 @@
 -# Set the command-line arguments to pass to the server.
 -# Due to shell escaping, to pass backslashes for regexes, you need to double
@@ -4349,7 +4349,7 @@ TASK [haproxy : Config file for exporter] **************************************
 
 changed: [MJeyhun-1]
 --- before: /etc/default/prometheus-haproxy-exporter
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmp5xjope_8/prometheus-haproxy-exporter.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmp6oekht3o/prometheus-haproxy-exporter.j2
 @@ -1,5 +1 @@
 -# Set the command-line arguments to pass to the server.
 -# Due to shell escaping, to pass backslashes for regexes, you need to double
@@ -4393,7 +4393,7 @@ Suggested packages:
   heartbeat ldirectord
 The following NEW packages will be installed:
   ipvsadm keepalived
-0 upgraded, 2 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 2 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-1]
 The following additional packages will be installed:
   ipvsadm
@@ -4401,7 +4401,7 @@ Suggested packages:
   heartbeat ldirectord
 The following NEW packages will be installed:
   ipvsadm keepalived
-0 upgraded, 2 newly installed, 0 to remove and 250 not upgraded.
+0 upgraded, 2 newly installed, 0 to remove and 256 not upgraded.
 changed: [MJeyhun-2]
 
 TASK [keepalived : Download Keepalived exporter package] ***********************
@@ -4414,17 +4414,17 @@ Selecting previously unselected package keepalived-exporter.
 Preparing to unpack .../keepalived-exporter_1.7.0_linux_amd64.deb ...
 Unpacking keepalived-exporter (1.7.0) ...
 Setting up keepalived-exporter (1.7.0) ...
-changed: [MJeyhun-2]
+changed: [MJeyhun-1]
 Selecting previously unselected package keepalived-exporter.
 (Reading database ... 77331 files and directories currently installed.)
 Preparing to unpack .../keepalived-exporter_1.7.0_linux_amd64.deb ...
 Unpacking keepalived-exporter (1.7.0) ...
 Setting up keepalived-exporter (1.7.0) ...
-changed: [MJeyhun-1]
+changed: [MJeyhun-2]
 
 TASK [keepalived : Deploy Keepalived Exporter service file] ********************
 --- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpnf1lux2l/keepalived-exporter.service.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpmicvtu2r/keepalived-exporter.service.j2
 @@ -0,0 +1,10 @@
 +Description=Prometheus Keepalived Exporter
 +After=network.target
@@ -4439,7 +4439,7 @@ TASK [keepalived : Deploy Keepalived Exporter service file] ********************
 
 changed: [MJeyhun-1]
 --- before
-+++ after: /home/raven/.ansible/tmp/ansible-local-408yjuostjk/tmpyoh6g0hs/keepalived-exporter.service.j2
++++ after: /home/raven/.ansible/tmp/ansible-local-479pc4ge8g2/tmpwkq8k6em/keepalived-exporter.service.j2
 @@ -0,0 +1,10 @@
 +Description=Prometheus Keepalived Exporter
 +After=network.target
@@ -4455,8 +4455,8 @@ changed: [MJeyhun-1]
 changed: [MJeyhun-2]
 
 TASK [keepalived : Reload Daemon] **********************************************
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 
 TASK [keepalived : Create keepalived script user] ******************************
 changed: [MJeyhun-1]
@@ -4472,7 +4472,7 @@ TASK [keepalived : Ensure keepalived_script home directory exists] *************
      "path": "/home/keepalived_script"
  }
 
-changed: [MJeyhun-1]
+changed: [MJeyhun-2]
 --- before
 +++ after
 @@ -1,4 +1,4 @@
@@ -4482,7 +4482,7 @@ changed: [MJeyhun-1]
      "path": "/home/keepalived_script"
  }
 
-changed: [MJeyhun-2]
+changed: [MJeyhun-1]
 
 TASK [keepalived : Upload check script] ****************************************
 --- before
@@ -4519,8 +4519,8 @@ changed: [MJeyhun-2]
 changed: [MJeyhun-1]
 
 TASK [keepalived : Enable and start Keepalived service] ************************
-changed: [MJeyhun-1]
 changed: [MJeyhun-2]
+changed: [MJeyhun-1]
 
 TASK [keepalived : Ensure prometheus-keepalived-exporter service is enabled and started] ***
 changed: [MJeyhun-1]
@@ -4531,19 +4531,19 @@ changed: [MJeyhun-1]
 changed: [MJeyhun-2]
 
 RUNNING HANDLER [keepalived : Restart prometheus-keepalived-exporter] **********
-changed: [MJeyhun-1]
 changed: [MJeyhun-2]
+changed: [MJeyhun-1]
 
 PLAY RECAP *********************************************************************
-MJeyhun-1                  : ok=96   changed=74   unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
-MJeyhun-2                  : ok=90   changed=68   unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
+MJeyhun-1                  : ok=96   changed=73   unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
+MJeyhun-2                  : ok=90   changed=67   unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
 MJeyhun-3                  : ok=78   changed=58   unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
 
 
 PLAY [Initial setup] ***********************************************************
 
 TASK [Gathering Facts] *********************************************************
-[WARNING]: Platform linux on host MJeyhun-1 is using the discovered Python
+[WARNING]: Platform linux on host MJeyhun-3 is using the discovered Python
 interpreter at /usr/bin/python3.12, but future installation of another Python
 interpreter could change the meaning of that path. See
 https://docs.ansible.com/ansible-
@@ -4553,14 +4553,14 @@ interpreter at /usr/bin/python3.12, but future installation of another Python
 interpreter could change the meaning of that path. See
 https://docs.ansible.com/ansible-
 core/2.18/reference_appendices/interpreter_discovery.html for more information.
-[WARNING]: Platform linux on host MJeyhun-3 is using the discovered Python
+[WARNING]: Platform linux on host MJeyhun-1 is using the discovered Python
 interpreter at /usr/bin/python3.12, but future installation of another Python
 interpreter could change the meaning of that path. See
 https://docs.ansible.com/ansible-
 core/2.18/reference_appendices/interpreter_discovery.html for more information.
-ok: [MJeyhun-1]
-ok: [MJeyhun-2]
 ok: [MJeyhun-3]
+ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [init : Update APT cache] *************************************************
 ok: [MJeyhun-3]
@@ -4573,67 +4573,67 @@ ok: [MJeyhun-2]
 ok: [MJeyhun-3]
 
 TASK [init : Ensure Prometheus Node Exporter is started and enabled] ***********
+ok: [MJeyhun-3]
 ok: [MJeyhun-2]
 ok: [MJeyhun-1]
-ok: [MJeyhun-3]
 
 TASK [init : Add Grafana GPG key] **********************************************
-ok: [MJeyhun-3]
 ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-3]
 
 TASK [init : Add grafana repo] *************************************************
-ok: [MJeyhun-3]
 ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-3]
 
 TASK [init : Ensure the "backup" user exists and SSH key pair is generated] ****
 [WARNING]: Found existing ssh key private file "/home/backup/.ssh/id_rsa", no
 force, so skipping ssh-keygen generation
-ok: [MJeyhun-1]
-ok: [MJeyhun-3]
 ok: [MJeyhun-2]
+ok: [MJeyhun-3]
+ok: [MJeyhun-1]
 
 TASK [init : Add backup server SSH key to known_hosts for user backup] *********
-ok: [MJeyhun-1]
-ok: [MJeyhun-2]
 ok: [MJeyhun-3]
+ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [init : Ensure restore directory exists] **********************************
 ok: [MJeyhun-1]
-ok: [MJeyhun-2]
 ok: [MJeyhun-3]
+ok: [MJeyhun-2]
 
 TASK [init : Install duplicity] ************************************************
 ok: [MJeyhun-3]
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 
 PLAY [DNS Servers] *************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
 ok: [MJeyhun-3]
+ok: [MJeyhun-2]
 
 TASK [bind : Install bind9] ****************************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 ok: [MJeyhun-3]
 
 TASK [bind : Install dnspython] ************************************************
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 ok: [MJeyhun-3]
 
 TASK [bind : template] *********************************************************
-ok: [MJeyhun-2] => (item=None)
 ok: [MJeyhun-1] => (item=None)
-ok: [MJeyhun-3] => (item=None)
 ok: [MJeyhun-2] => (item=None)
-ok: [MJeyhun-2]
+ok: [MJeyhun-3] => (item=None)
 ok: [MJeyhun-1] => (item=None)
 ok: [MJeyhun-1]
+ok: [MJeyhun-2] => (item=None)
+ok: [MJeyhun-2]
 ok: [MJeyhun-3] => (item=None)
 ok: [MJeyhun-3]
 
@@ -4654,18 +4654,18 @@ TASK [bind : Flush] ************************************************************
 TASK [bind : Flush] ************************************************************
 
 TASK [bind : Enable bind9] *****************************************************
-ok: [MJeyhun-3]
 ok: [MJeyhun-1]
+ok: [MJeyhun-3]
 ok: [MJeyhun-2]
 
 TASK [bind : Install Bind9 exporter] *******************************************
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
 ok: [MJeyhun-3]
+ok: [MJeyhun-2]
 
 TASK [bind : Ensure Bind exporter is running and enabled] **********************
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 ok: [MJeyhun-3]
 
 TASK [bind : Add A records] ****************************************************
@@ -4701,9 +4701,9 @@ ok: [MJeyhun-3]
 ok: [MJeyhun-2]
 
 TASK [resolver : Check if /etc/resolver.conf exists] ***************************
-ok: [MJeyhun-2]
-ok: [MJeyhun-3]
 ok: [MJeyhun-1]
+ok: [MJeyhun-3]
+ok: [MJeyhun-2]
 
 TASK [resolver : Unlink /etc/resolv.conf if it exists and is a symlink] ********
 skipping: [MJeyhun-1]
@@ -4740,16 +4740,16 @@ ok: [MJeyhun-2]
 TASK [agama : Download Agama app and Dockerfile] *******************************
 ok: [MJeyhun-1] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/main/agama.py', 'dest': 'agama.py'})
 ok: [MJeyhun-2] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/main/agama.py', 'dest': 'agama.py'})
-ok: [MJeyhun-1] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/main/Dockerfile', 'dest': 'Dockerfile'})
 ok: [MJeyhun-2] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/main/Dockerfile', 'dest': 'Dockerfile'})
+ok: [MJeyhun-1] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/main/Dockerfile', 'dest': 'Dockerfile'})
 
 TASK [agama : Build Agama Docker image] ****************************************
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 
 TASK [agama : Start Agama Docker container] ************************************
-ok: [MJeyhun-1] => (item=None)
 ok: [MJeyhun-2] => (item=None)
+ok: [MJeyhun-1] => (item=None)
 ok: [MJeyhun-1] => (item=None)
 ok: [MJeyhun-1]
 ok: [MJeyhun-2] => (item=None)
@@ -4765,8 +4765,8 @@ ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [nginx : Apply Nginx configuration using template] ************************
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 
 TASK [nginx : Flush handlers] **************************************************
 
@@ -4781,18 +4781,18 @@ ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [nginx : Ensure nginx exporter started] ***********************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 PLAY [Database server] *********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : Install MySQL server] ********************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : Ensure MySQL service is started and enabled] *********************
 ok: [MJeyhun-1]
@@ -4803,8 +4803,8 @@ ok: [MJeyhun-2]
 ok: [MJeyhun-1]
 
 TASK [mysql : Install Python MySQL library] ************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : MySQL database] **************************************************
 ok: [MJeyhun-1]
@@ -4815,16 +4815,16 @@ ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [mysql : Install MySQL exporter] ******************************************
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 
 TASK [mysql : Cnf files for exporter] ******************************************
 ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [mysql : Create MySQL user for the exporter] ******************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : Configure mysqld_exporter systemd service to use .my.cnf] ********
 ok: [MJeyhun-2]
@@ -4843,12 +4843,12 @@ ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [mysql : Create .my.cnf for backup user] **********************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : Ensure /etc/cron.d/mysql-backup is created] **********************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : start cron] ******************************************************
 ok: [MJeyhun-1]
@@ -4991,18 +4991,18 @@ ok: [MJeyhun-3]
 ok: [MJeyhun-2]
 
 TASK [promtail : Install Promtail] *********************************************
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 ok: [MJeyhun-3]
 
 TASK [promtail : Add promtail user to adm group] *******************************
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
 ok: [MJeyhun-3]
+ok: [MJeyhun-2]
 
 TASK [promtail : Check if agama log exists] ************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 ok: [MJeyhun-3]
 
 TASK [promtail : Allow adm group to read agama log] ****************************
@@ -5011,14 +5011,14 @@ skipping: [MJeyhun-2]
 skipping: [MJeyhun-3]
 
 TASK [promtail : Create Promtail positions directory] **************************
-ok: [MJeyhun-3]
 ok: [MJeyhun-1]
+ok: [MJeyhun-3]
 ok: [MJeyhun-2]
 
 TASK [promtail : Configure Promtail] *******************************************
+ok: [MJeyhun-3]
 ok: [MJeyhun-1]
 ok: [MJeyhun-2]
-ok: [MJeyhun-3]
 
 TASK [promtail : Enable and start Promtail] ************************************
 ok: [MJeyhun-3]
@@ -5040,8 +5040,8 @@ ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [haproxy : Haproxy started] ***********************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [haproxy : Install prometheus haproxy exporter] ***************************
 ok: [MJeyhun-2]
@@ -5071,16 +5071,16 @@ ok: [MJeyhun-2]
 ok: [MJeyhun-1]
 
 TASK [keepalived : Download Keepalived exporter package] ***********************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [keepalived : Install Keepalived exporter] ********************************
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 
 TASK [keepalived : Deploy Keepalived Exporter service file] ********************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [keepalived : Reload Daemon] **********************************************
 ok: [MJeyhun-2]
@@ -5103,12 +5103,12 @@ ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [keepalived : Enable and start Keepalived service] ************************
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 
 TASK [keepalived : Ensure prometheus-keepalived-exporter service is enabled and started] ***
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 PLAY RECAP *********************************************************************
 MJeyhun-1                  : ok=81   changed=0    unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
@@ -5117,12 +5117,12 @@ MJeyhun-3                  : ok=64   changed=0    unreachable=0    failed=0    s
 
 MJeyhun-1 | CHANGED => {
     "changed": true,
-    "elapsed": 74,
+    "elapsed": 75,
     "rebooted": true
 }
 MJeyhun-3 | CHANGED => {
     "changed": true,
-    "elapsed": 75,
+    "elapsed": 84,
     "rebooted": true
 }
 MJeyhun-2 | CHANGED => {
@@ -5134,6 +5134,11 @@ MJeyhun-2 | CHANGED => {
 PLAY [Initial setup] ***********************************************************
 
 TASK [Gathering Facts] *********************************************************
+[WARNING]: Platform linux on host MJeyhun-3 is using the discovered Python
+interpreter at /usr/bin/python3.12, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
 [WARNING]: Platform linux on host MJeyhun-2 is using the discovered Python
 interpreter at /usr/bin/python3.12, but future installation of another Python
 interpreter could change the meaning of that path. See
@@ -5144,51 +5149,46 @@ interpreter at /usr/bin/python3.12, but future installation of another Python
 interpreter could change the meaning of that path. See
 https://docs.ansible.com/ansible-
 core/2.18/reference_appendices/interpreter_discovery.html for more information.
-[WARNING]: Platform linux on host MJeyhun-3 is using the discovered Python
-interpreter at /usr/bin/python3.12, but future installation of another Python
-interpreter could change the meaning of that path. See
-https://docs.ansible.com/ansible-
-core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [MJeyhun-3]
 ok: [MJeyhun-2]
 ok: [MJeyhun-1]
-ok: [MJeyhun-3]
 
 TASK [init : Update APT cache] *************************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-3]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [init : Install Prometheus Node Exporter] *********************************
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 ok: [MJeyhun-3]
 
 TASK [init : Ensure Prometheus Node Exporter is started and enabled] ***********
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 ok: [MJeyhun-3]
+ok: [MJeyhun-1]
 
 TASK [init : Add Grafana GPG key] **********************************************
+ok: [MJeyhun-2]
 ok: [MJeyhun-3]
 ok: [MJeyhun-1]
-ok: [MJeyhun-2]
 
 TASK [init : Add grafana repo] *************************************************
-ok: [MJeyhun-2]
-ok: [MJeyhun-3]
 ok: [MJeyhun-1]
+ok: [MJeyhun-3]
+ok: [MJeyhun-2]
 
 TASK [init : Ensure the "backup" user exists and SSH key pair is generated] ****
 [WARNING]: Found existing ssh key private file "/home/backup/.ssh/id_rsa", no
 force, so skipping ssh-keygen generation
-ok: [MJeyhun-3]
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
+ok: [MJeyhun-3]
 
 TASK [init : Add backup server SSH key to known_hosts for user backup] *********
 ok: [MJeyhun-2]
-ok: [MJeyhun-1]
 ok: [MJeyhun-3]
+ok: [MJeyhun-1]
 
 TASK [init : Ensure restore directory exists] **********************************
 ok: [MJeyhun-1]
@@ -5196,9 +5196,9 @@ ok: [MJeyhun-2]
 ok: [MJeyhun-3]
 
 TASK [init : Install duplicity] ************************************************
+ok: [MJeyhun-3]
 ok: [MJeyhun-2]
 ok: [MJeyhun-1]
-ok: [MJeyhun-3]
 
 PLAY [DNS Servers] *************************************************************
 
@@ -5208,14 +5208,14 @@ ok: [MJeyhun-3]
 ok: [MJeyhun-1]
 
 TASK [bind : Install bind9] ****************************************************
+ok: [MJeyhun-3]
 ok: [MJeyhun-1]
 ok: [MJeyhun-2]
-ok: [MJeyhun-3]
 
 TASK [bind : Install dnspython] ************************************************
 ok: [MJeyhun-3]
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 
 TASK [bind : template] *********************************************************
 ok: [MJeyhun-3] => (item=None)
@@ -5245,14 +5245,14 @@ TASK [bind : Flush] ************************************************************
 TASK [bind : Flush] ************************************************************
 
 TASK [bind : Enable bind9] *****************************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-3]
+ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [bind : Install Bind9 exporter] *******************************************
-ok: [MJeyhun-2]
-ok: [MJeyhun-1]
 ok: [MJeyhun-3]
+ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 
 TASK [bind : Ensure Bind exporter is running and enabled] **********************
 ok: [MJeyhun-1]
@@ -5287,9 +5287,9 @@ ok: [MJeyhun-3]
 PLAY [Resolve] *****************************************************************
 
 TASK [Gathering Facts] *********************************************************
+ok: [MJeyhun-3]
 ok: [MJeyhun-1]
 ok: [MJeyhun-2]
-ok: [MJeyhun-3]
 
 TASK [resolver : Check if /etc/resolver.conf exists] ***************************
 ok: [MJeyhun-1]
@@ -5302,9 +5302,9 @@ skipping: [MJeyhun-2]
 skipping: [MJeyhun-3]
 
 TASK [resolver : Apply /etc/resolv.conf template] ******************************
-ok: [MJeyhun-1]
-ok: [MJeyhun-3]
 ok: [MJeyhun-2]
+ok: [MJeyhun-3]
+ok: [MJeyhun-1]
 
 PLAY [Web Servers] *************************************************************
 
@@ -5313,12 +5313,12 @@ ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [docker : Install Docker and prerequisites] *******************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [docker : Ensure Docker service is running] *******************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [docker : Install Loki Docker plugin] *************************************
 ok: [MJeyhun-1]
@@ -5331,8 +5331,8 @@ ok: [MJeyhun-2]
 TASK [agama : Download Agama app and Dockerfile] *******************************
 ok: [MJeyhun-2] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/main/agama.py', 'dest': 'agama.py'})
 ok: [MJeyhun-1] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/main/agama.py', 'dest': 'agama.py'})
-ok: [MJeyhun-1] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/main/Dockerfile', 'dest': 'Dockerfile'})
 ok: [MJeyhun-2] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/main/Dockerfile', 'dest': 'Dockerfile'})
+ok: [MJeyhun-1] => (item={'url': 'https://raw.githubusercontent.com/hudolejev/agama/main/Dockerfile', 'dest': 'Dockerfile'})
 
 TASK [agama : Build Agama Docker image] ****************************************
 ok: [MJeyhun-1]
@@ -5341,10 +5341,10 @@ ok: [MJeyhun-2]
 TASK [agama : Start Agama Docker container] ************************************
 ok: [MJeyhun-2] => (item=None)
 ok: [MJeyhun-1] => (item=None)
-ok: [MJeyhun-1] => (item=None)
-ok: [MJeyhun-1]
 ok: [MJeyhun-2] => (item=None)
 ok: [MJeyhun-2]
+ok: [MJeyhun-1] => (item=None)
+ok: [MJeyhun-1]
 
 TASK [agama : Add CNAME records for Web Servers] *******************************
 ok: [MJeyhun-1 -> MJeyhun-3(193.40.157.25)] => (item=None)
@@ -5352,8 +5352,8 @@ ok: [MJeyhun-1 -> MJeyhun-3(193.40.157.25)] => (item=None)
 ok: [MJeyhun-1 -> {{ groups['dns_primary'][0] }}]
 
 TASK [nginx : install nginx] ***************************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [nginx : Apply Nginx configuration using template] ************************
 ok: [MJeyhun-1]
@@ -5378,44 +5378,44 @@ ok: [MJeyhun-1]
 PLAY [Database server] *********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : Install MySQL server] ********************************************
 ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [mysql : Ensure MySQL service is started and enabled] *********************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : MySQL override.cnf] **********************************************
 ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [mysql : Install Python MySQL library] ************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : MySQL database] **************************************************
 ok: [MJeyhun-2]
 ok: [MJeyhun-1]
 
 TASK [mysql : MySQL User] ******************************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : Install MySQL exporter] ******************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : Cnf files for exporter] ******************************************
 ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [mysql : Create MySQL user for the exporter] ******************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : Configure mysqld_exporter systemd service to use .my.cnf] ********
 ok: [MJeyhun-1]
@@ -5430,20 +5430,20 @@ ok: [MJeyhun-2]
 ok: [MJeyhun-1]
 
 TASK [mysql : Create backup MySQL user and grant privileges] *******************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : Create .my.cnf for backup user] **********************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : Ensure /etc/cron.d/mysql-backup is created] **********************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : start cron] ******************************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [mysql : Create replication user with REPLICATION SLAVE permissions] ******
 ok: [MJeyhun-1]
@@ -5578,8 +5578,8 @@ PLAY [Promtail server] *********************************************************
 
 TASK [Gathering Facts] *********************************************************
 ok: [MJeyhun-1]
-ok: [MJeyhun-2]
 ok: [MJeyhun-3]
+ok: [MJeyhun-2]
 
 TASK [promtail : Install Promtail] *********************************************
 ok: [MJeyhun-2]
@@ -5587,14 +5587,14 @@ ok: [MJeyhun-1]
 ok: [MJeyhun-3]
 
 TASK [promtail : Add promtail user to adm group] *******************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 ok: [MJeyhun-3]
 
 TASK [promtail : Check if agama log exists] ************************************
-ok: [MJeyhun-3]
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
+ok: [MJeyhun-3]
 
 TASK [promtail : Allow adm group to read agama log] ****************************
 skipping: [MJeyhun-1]
@@ -5612,9 +5612,9 @@ ok: [MJeyhun-2]
 ok: [MJeyhun-3]
 
 TASK [promtail : Enable and start Promtail] ************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 ok: [MJeyhun-3]
+ok: [MJeyhun-1]
 
 PLAY [Haproxy] *****************************************************************
 
@@ -5623,28 +5623,28 @@ ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [haproxy : Install HAProxy and HAProxy Exporter] **************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [haproxy : Config file for HAProxy] ***************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [haproxy : Haproxy started] ***********************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [haproxy : Install prometheus haproxy exporter] ***************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [haproxy : Config file for exporter] **************************************
 ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [haproxy : Ensure haproxy-exporter is enabled and running] ****************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [haproxy : Add CNAME records for haproxy] *********************************
 ok: [MJeyhun-1 -> MJeyhun-3(193.40.157.25)] => (item=None)
@@ -5654,8 +5654,8 @@ ok: [MJeyhun-1 -> {{ groups['dns_primary'][0] }}]
 PLAY [Keepalived] **************************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [keepalived : Install keepalived] *****************************************
 ok: [MJeyhun-1]
@@ -5666,16 +5666,16 @@ ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [keepalived : Install Keepalived exporter] ********************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [keepalived : Deploy Keepalived Exporter service file] ********************
 ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [keepalived : Reload Daemon] **********************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [keepalived : Create keepalived script user] ******************************
 ok: [MJeyhun-1]
@@ -5686,24 +5686,24 @@ ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [keepalived : Upload check script] ****************************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [keepalived : Deploy keepalived.conf] *************************************
 ok: [MJeyhun-1]
 ok: [MJeyhun-2]
 
 TASK [keepalived : Enable and start Keepalived service] ************************
-ok: [MJeyhun-1]
 ok: [MJeyhun-2]
+ok: [MJeyhun-1]
 
 TASK [keepalived : Ensure prometheus-keepalived-exporter service is enabled and started] ***
-ok: [MJeyhun-2]
 ok: [MJeyhun-1]
+ok: [MJeyhun-2]
 
 PLAY RECAP *********************************************************************
 MJeyhun-1                  : ok=81   changed=0    unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
 MJeyhun-2                  : ok=78   changed=0    unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
 MJeyhun-3                  : ok=64   changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
 
-Sun Jan 11 16:57:41 EET 2026
+Wed Jan 14 19:00:53 EET 2026
