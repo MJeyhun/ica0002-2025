@@ -92,3 +92,4 @@
   run_once: true
   when: inventory_hostname in groups['dns_primary']
   notify: reload rndc
+
