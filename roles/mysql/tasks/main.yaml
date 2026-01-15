@@ -73,6 +73,7 @@
     path: /etc/default/prometheus-mysqld-exporter
     regexp: '^ARGS='
     line: 'ARGS="--config.my-cnf=/var/lib/prometheus/.my.cnf"'
+  notify: Restart mysqld-exporter
 
 - name: Ensure Prometheus MySQL Exporter is started and enabled
   systemd:
