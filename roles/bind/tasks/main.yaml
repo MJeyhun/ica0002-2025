@@ -72,6 +72,7 @@
     value: "{{ item.value }}"
   loop: "{{ dns_a_records | dict2items }}"
   no_log: true
+  run_once: true
   when: inventory_hostname in groups['dns_primary']
   notify: reload rndc
 
@@ -88,5 +89,6 @@
     value: "{{ item.value }}"
   loop: "{{ nameserver_records | dict2items }}"
   no_log: true
+  run_once: true
   when: inventory_hostname in groups['dns_primary']
   notify: reload rndc
